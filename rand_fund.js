@@ -1,14 +1,5 @@
 let funds_idx = 0;
 
-$(document).ready(function () {
-    for (let i = funds.length - 1; i >= 0; i--) {
-        let new_idx = Math.floor(Math.random() * (i + 1));
-        let previous = funds[new_idx];
-        funds[new_idx] = funds[i];
-        funds[i] = previous;
-    }
-});
-
 let fetch_preview = function(url) {
     let xhr = new XMLHttpRequest();
     xhr.onload = function() {
@@ -42,6 +33,7 @@ $(function () {
             funds_idx++;
 
             if (fund.html) {
+                console.log(fund.html)
                 $(".fund_box").html(fund.html).css("background-color", "black")
             } else if (fund.description && fund.url) {
                 $(".fund_box").html(`<b><a target="_blank" href="${fund.url}">${fund.description}</a></b>`)
