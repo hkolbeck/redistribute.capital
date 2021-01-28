@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Check Funds</title>
+
+    <script src="./jquery-3.5.1.js"></script>
+    <script src="./papa_parse.js"></script>
+    <script src="./fetch_funds.js"></script>
+    <script>
+        fetch_funds().then(() =>
+            funds.forEach((fund, idx) => {
+                console.log(`${idx + 1}: '${fund.html}'`)
+                $("#tweet_table").append(`<tr><th>${idx + 1}</th><th>${fund.html}</th></tr>`)
+            })
+        )
+    </script>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<table id="tweet_table">
+</table>
+</body>
+</html>
