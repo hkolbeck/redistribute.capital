@@ -8,10 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@RedistCapital"/>
     <meta name="twitter:creator" content="@hbeckpdx"/>
     <meta property="og:url" content="http://redistribute.capital" />
     <meta property="og:title" content="redistribute.capital" />
-    <meta property="og:description" content="Find people who could use the $5 you didn't spend on coffee today." />
+    <meta property="og:description" content="Find people who really need the $5 you didn't spend on coffee today." />
+    <meta property="og:image" content="http://lets.redistribute.capital/preview.png" />
 
     <title>redistribute.capital</title>
 
@@ -78,6 +80,14 @@
             border: 0;
             border-radius: 25px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            position: relative;
+            top: -128px;
+        }
+
+        .loading {
+            position: relative;
+            top: 256px;
+            visibility: hidden;
         }
 
         .twitter {
@@ -98,6 +108,7 @@
 <br>
 
 <div class="fund_box_wrapper">
+    <img src="loading.svg" class="loading" alt="loading"/>
     <div class="fund_box"></div>
 </div>
 <div class="twitter">
