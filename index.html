@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(1088)https://00f74ba44bdfde37e6dbb1443439afc3647acf198a-apidata.googleusercontent.com/download/storage/v1/b/lets.redistribute.capital/o/index.html?jk=AFshE3XjQg9nq1WWNHGImV39AiP7IFYOv-JebHkRfco1qUDB4hes05YhfTJI6J2nUfGfPbVSHUbpjrSv-na70k5Bg5QAkG6rAvzIGscJh9xwC_ZaJWXkvewqI46bTxd6ObHJsblNOji9panCKILEWuTwk8KVekucXupknq3jkyxVHRr3UaJwnUpruQdo4gvfq6SsIZFO05DLdrqGbE5tTmQriyO0s-7I1yH3K-I94mX0y-3QkelO28-OUzKrDkSwdGf5zcOIFlRT0-rZM6pfXqsjG0g2KDAD9vd7sslQH3aIBehbqnmH7G125KZFGthljoyNYTKChiC8_U8UKCRYJ8mIwHyHg0OHyExqH8lkwHxWz6pM8YYOK6qLwtSihDK1eb6vxAFR7_ocTNPc0xEoJ2Ll5dm11OfKA0l9F9PI-NesA-4T9ik76OWJC9cZF6J_UzGBuqjs6QV_HT2QXTylt-sMh8TnQGCMga9KAxQrN56_JoYXv3LSeGDI53w7Duf6poFGuN4PYyZUc4SS3_lb3Cq5zl6BgW59rvP13rb_EpIcNioHGAUBeCZG0MRKT7ixVLT9tcJNY1pohjdAYJ3jLTHEIEBhba7YV3ra6Qb8R4yJCapXXcv5CeVTYVGzmuirXRfFVBiOw0V_OeECSflOYDJGH49dwhWZiLzo063kkridy9NrNsVa1MXQhvNuzb_INV4N0vQ3XEIXvQOvmRBuAZa0wBNNN4_G4pqarBDPVqkb7LDoU4HyChaSaLE1wfGEYdHEjNDMQlv0krd_iTUMh0pWtS6tyEFyKbfI57xtV-mZymUoldWLzFMJ6Tnkkjtqr83QdCOF8MS5nzwfZFGx2Q90CZK4y6GDSf9GSggoAUPK8aD00pmrvliVMZ0llF72kHuJ9bmAojtiN1u2scAadUotyvEzJaDzX58eOZol&isca=1 -->
 <html lang="en">
 <head>
     <link rel="icon" href="http://lets.redistribute.capital/favicon.ico">
@@ -25,7 +24,9 @@
     <script src="./rand_fund.js"></script>
     <script src="./fetch_funds.js"></script>
     <script>
-        fetch_funds().then(() => shuffle_funds())
+        fetch_funds()
+            // .then(() => funds.forEach((fund, idx) => console.log(`Fund ${idx}: ${fund ? fund.html : 'undef'}`)))
+            .then(() => shuffle_funds())
     </script>
 
     <style>
@@ -96,6 +97,11 @@
             right: 15px;
         }
 
+        .pay_logo {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
     </style>
 
 </head>
@@ -110,6 +116,7 @@
 <div class="fund_box_wrapper">
     <img src="loading.svg" class="loading" alt="loading"/>
     <div class="fund_box"></div>
+    <div class="payment_links"></div>
 </div>
 <div class="twitter">
     <a href="https://twitter.com/hbeckpdx" target="_blank" rel="noopener noreferrer">

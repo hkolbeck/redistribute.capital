@@ -22,8 +22,33 @@ let fetch_preview = function (url) {
     xhr.send();
 };
 
+let find_payment_links = function (tweet) {
+    tweet = tweet.toString()
+
+    let venmo = tweet.match(/[Vv][Ee][Nn][Mm][Oo]:?\s*([\w-]+)/)
+    if (venmo) {
+        $(".payment_links")
+            .append(`<a class=".pay_logo" href="https://venmo.com/${venmo[1]}" target="_blank" rel="noopener noreferrer">
+                         <img alt="Venmo" height="64" width="64" src="https://cdn1.venmo.com/marketing/images/branding/venmo-icon.svg"/>
+                     </a>`)
+    }
+
+    let cashapp = tweet.match(/(\$[a-zA-Z][\w-]+)|[Cc][Aa][Ss][Hh]-?[Aa][Pp][Pp]:?\s*@?([a-zA-Z][\w-]+)/)
+    if (cashapp) {
+        $(".payment_links")
+            .append(`<a class=".pay_logo" href="https://cash.me/${cashapp[2] || cashapp[1]}" target="_blank" rel="noopener noreferrer">
+                         <img alt="CashApp" height="64" width="64" src="https://cash.app/icon-196.png"/>
+                     </a>`)
+    }
+
+    if (cashapp || venmo) {
+        $(".payment_links").css("visibility", "visible")
+    }
+}
+
 let load_tweet = function (tweet) {
     $(".fund_box").css("visibility", "hidden").css("background-color", "#FEFEFE").html(tweet)
+    $(".payment_links").empty().css("visibility", "hidden")
     $(".loading").css("visibility", "visible")
 
     let checkLoaded = null
@@ -41,6 +66,7 @@ let load_tweet = function (tweet) {
             clearInterval(checkLoaded)
             $(".loading").css("visibility", "hidden")
             setTimeout(() => {
+                find_payment_links(tweet)
                 $(".fund_box").css("visibility", "visible")
             }, 500)
         }
