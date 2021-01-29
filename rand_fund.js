@@ -34,10 +34,10 @@ $(function () {
 
             if (fund.html) {
                 console.log(fund.html)
-                $(".fund_box").html(fund.html).css("background-color", "black")
+                $(".fund_box").html(fund.html).css("background-color", "#FEFEFE")
             } else if (fund.description && fund.url) {
                 $(".fund_box").html(`<b><a target="_blank" href="${fund.url}">${fund.description}</a></b>`)
-                    .css("background-color", "white");
+                    .css("background-color", "#FEFEFE");
                 fetch_preview(fund.url)
             } else {
                 $(".fund_box").text(`Unable to fetch fund data for ${fund}`)
@@ -45,7 +45,7 @@ $(function () {
 
             $(".fund_box_wrapper").css("visibility", "visible");
         })
-        .hover(
+        /* .hover(
             function () {
                 $(this).css("background-image", "linear-gradient(167deg, red 50%, black 51%)")
                     .css("color", "white")
@@ -56,5 +56,5 @@ $(function () {
                     .css("color", "black")
                     .css("box-shadow", "none");
             }
-        );
+        );*/
 });
