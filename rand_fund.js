@@ -45,7 +45,6 @@ let load_tweet = function (tweet) {
             }, 500)
         }
     }, 500)
-
 }
 
 $(function () {
