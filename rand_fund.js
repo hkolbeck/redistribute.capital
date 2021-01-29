@@ -40,7 +40,9 @@ let load_tweet = function (tweet) {
             clearTimeout(checkTimeout)
             clearInterval(checkLoaded)
             $(".loading").css("visibility", "hidden")
-            $(".fund_box").css("visibility", "visible")
+            setTimeout(() => {
+                $(".fund_box").css("visibility", "visible")
+            }, 500)
         }
     }, 500)
 
