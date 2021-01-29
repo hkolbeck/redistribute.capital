@@ -33,7 +33,6 @@ $(function () {
             funds_idx++;
 
             if (fund.html) {
-                console.log(fund.html)
                 $(".fund_box").html(fund.html).css("background-color", "#FEFEFE")
             } else if (fund.description && fund.url) {
                 $(".fund_box").html(`<b><a target="_blank" href="${fund.url}">${fund.description}</a></b>`)
@@ -45,16 +44,4 @@ $(function () {
 
             $(".fund_box_wrapper").css("visibility", "visible");
         })
-        /* .hover(
-            function () {
-                $(this).css("background-image", "linear-gradient(167deg, red 50%, black 51%)")
-                    .css("color", "white")
-                    .css("box-shadow", "0px 0px 4px 4px #AAAAAA");
-            },
-            function () {
-                $(this).css("background-image", "none")
-                    .css("color", "black")
-                    .css("box-shadow", "none");
-            }
-        );*/
 });
