@@ -91,10 +91,15 @@
             visibility: hidden;
         }
 
-        .twitter {
-            position: absolute;
-            bottom: 10px;
-            right: 15px;
+        .twitter_box {
+            position: fixed;
+            bottom: 1%;
+            right: 1%;
+        }
+
+        .twitter_link {
+            max-height: 36px;
+            max-width: 36px;
         }
 
         .pay_logo {
@@ -118,9 +123,9 @@
     <div class="fund_box"></div>
     <div class="payment_links"></div>
 </div>
-<div class="twitter">
+<div class="twitter_box">
     <a href="https://twitter.com/hbeckpdx" target="_blank" rel="noopener noreferrer">
-        <img src="./twitter_logo.png" height="36" width="36" alt="twitter icon">
+        <img class="twitter_link" src="./twitter_logo.png" alt="twitter icon">
     </a>
 </div>
 </body>
