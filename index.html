@@ -21,12 +21,9 @@
 
     <script src="./jquery-3.5.1.js"></script>
     <script src="./papa_parse.js"></script>
-    <script src="./rand_fund.js"></script>
-    <script src="./fetch_funds.js"></script>
+    <script src="./funds.js"></script>
     <script>
-        fetch_funds()
-            // .then(() => funds.forEach((fund, idx) => console.log(`Fund ${idx}: ${fund ? fund.html : 'undef'}`)))
-            .then(() => shuffle_funds())
+        fetch_funds().then(() => shuffle_funds())
     </script>
 
     <style>
