@@ -28,17 +28,13 @@ let find_payment_links = function (tweet) {
     let venmo = tweet.match(/[Vv][Ee][Nn][Mm][Oo]:?\s*([\w-]+)/)
     if (venmo) {
         $(".payment_links")
-            .append(`<a class=".pay_logo" href="https://venmo.com/${venmo[1]}" target="_blank" rel="noopener noreferrer">
-                         <img alt="Venmo" height="64" width="64" src="https://cdn1.venmo.com/marketing/images/branding/venmo-icon.svg"/>
-                     </a>`)
+            .append(`<a href="https://venmo.com/${venmo[1]}" target="_blank" rel="noopener noreferrer"><img alt="Venmo" height="64" width="64" src="https://cdn1.venmo.com/marketing/images/branding/venmo-icon.svg"/></a>`)
     }
 
     let cashapp = tweet.match(/(\$[a-zA-Z][\w-]+)|[Cc][Aa][Ss][Hh]-?[Aa][Pp][Pp]:?\s*@?([a-zA-Z][\w-]+)/)
     if (cashapp) {
         $(".payment_links")
-            .append(`<a class=".pay_logo" href="https://cash.me/${cashapp[2] || cashapp[1]}" target="_blank" rel="noopener noreferrer">
-                         <img alt="CashApp" height="64" width="64" src="https://cash.app/icon-196.png"/>
-                     </a>`)
+            .append(`<a href="https://cash.me/${cashapp[2] || cashapp[1]}" target="_blank" rel="noopener noreferrer"><img alt="CashApp" height="64" width="64" src="https://cash.app/icon-196.png"/></a>`)
     }
 
     if (cashapp || venmo) {
