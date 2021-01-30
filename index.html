@@ -32,24 +32,25 @@
     <style>
         body {
             background-color: #FEFEFE;
-            height: 100%;
             font-family: 'Open Sans', sans-serif;
             letter-spacing: .1em;
         }
 
         h1 {
-            color: #5C5C5C;
-            font-size: 3em;
-            font-weight: 600;
-            text-align: center;
+           color: #5C5C5C;
+           font-size: 3em;
+           font-weight: 600;
+           text-align: center;
+           width: 100%;
         }
 
         .button {
             color: #FEFEFE;
             background-color: #59A0F3;
             width: 30%;
-            height: 25%;
+            max-height: 25%;
             padding: 10px;
+            font-family: 'Open Sans', sans-serif;
             font-size: 1.5em;
             font-weight: 400;
             text-align: center;
@@ -70,7 +71,6 @@
             width: 30%;
             max-width: 100%;
             text-align: center;
-            display: block;
             margin-left: auto;
             margin-right: auto;
         }
@@ -83,6 +83,7 @@
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             position: relative;
             top: -128px;
+            max-width: 100%;
         }
 
         .loading {
@@ -101,12 +102,33 @@
             max-height: 36px;
             max-width: 36px;
         }
+        
+        .payment_links {
+            margin-top: -120px;
+        }
 
         .pay_logo {
             margin-left: 5px;
             margin-right: 5px;
         }
-
+        
+        @media (max-width: 480px)
+        {
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .button{
+                font-size: 1.25em;
+                width: 85%;
+            }
+            
+            .fund_box_wrapper{
+                width: 85%
+            }
+        }
+        
     </style>
 
 </head>
@@ -121,7 +143,7 @@
 <div class="fund_box_wrapper">
     <img src="loading.svg" class="loading" alt="loading"/>
     <div class="fund_box"></div>
-    <div class="payment_links"></div>
+    <div class="payment_links"> </div>
 </div>
 <div class="twitter_box">
     <a href="https://twitter.com/hbeckpdx" target="_blank" rel="noopener noreferrer">
