@@ -27,10 +27,10 @@ Papa.parsePromise = function(url) {
     });
 };
 
-let fetch_funds = async function () {
+async function fetch_funds() {
     await Papa.parsePromise("https://docs.google.com/spreadsheets/d/e/2PACX-1vTS4kW1Z4_14OBGebIDZLXeXWBpuHuAhtzhECJ1L_7FqXgO64uQgiukG6VfWqlpxs-CKMA5-8tyOH7K/pub?gid=0&single=true&output=csv")
         .then(result => result.data.forEach(line => funds.push({html: line})))
-};
+}
 
 function shuffle_funds() {
     for (let i = funds.length - 1; i >= 0; i--) {
@@ -41,16 +41,16 @@ function shuffle_funds() {
     }
 }
 
-let find_payment_links = function (tweet) {
+function find_payment_links(tweet) {
     tweet = tweet.toString()
 
-    let venmo = tweet.match(/[Vv][Ee][Nn][Mm][Oo]:?\s*([\w-]+)/)
+    let venmo = tweet.match(/[Vv][Ee][Nn][Mm][Oo]:?\s*@?\s*([\w-]+)/)
     if (venmo) {
         $(".payment_links")
             .append(`<a href="https://venmo.com/${venmo[1]}" target="_blank" rel="noopener noreferrer"><img alt="Venmo" height="64" width="64" src="https://cdn1.venmo.com/marketing/images/branding/venmo-icon.svg"/></a>`)
     }
 
-    let cashapp = tweet.match(/(\$[a-zA-Z][\w-]+)|[Cc][Aa][Ss][Hh]-?[Aa][Pp][Pp]:?\s*@?([a-zA-Z][\w-]+)/)
+    let cashapp = tweet.match(/(\$[a-zA-Z][\w-]+)|[Cc][Aa][Ss][Hh]-?[Aa][Pp][Pp]:?\s*([a-zA-Z][\w-]+)/)
     if (cashapp) {
         $(".payment_links")
             .append(`<a href="https://cash.me/${cashapp[2] || cashapp[1]}" target="_blank" rel="noopener noreferrer"><img alt="CashApp" height="64" width="64" src="https://cash.app/icon-196.png"/></a>`)
