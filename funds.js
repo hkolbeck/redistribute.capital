@@ -1,22 +1,4 @@
-let funds = []
-let funds_idx = 0
-window.history.replaceState({idx: 0}, null, "")
-
-window.onpopstate = function (event) {
-    if (event.state) {
-        let state_idx = event.state.idx - 1
-        if (state_idx < 0) {
-            state_idx = funds.length - 1
-        }
-
-        funds_idx = state_idx
-    }
-
-    render_fund(funds[funds_idx])
-    funds_idx++
-}
-
-Papa.parsePromise = function(url) {
+function loadCsv(url) {
     return new Promise(function(complete, error) {
         Papa.parse(url, {
             download: true,
@@ -27,30 +9,29 @@ Papa.parsePromise = function(url) {
     });
 };
 
-async function fetch_funds() {
-    await Papa.parsePromise("https://docs.google.com/spreadsheets/d/e/2PACX-1vTS4kW1Z4_14OBGebIDZLXeXWBpuHuAhtzhECJ1L_7FqXgO64uQgiukG6VfWqlpxs-CKMA5-8tyOH7K/pub?gid=0&single=true&output=csv")
-        .then(result => result.data.forEach(line => funds.push({html: line})))
+async function fetchFunds() {
+    // Load funds
+    let funds = (await loadCsv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTS4kW1Z4_14OBGebIDZLXeXWBpuHuAhtzhECJ1L_7FqXgO64uQgiukG6VfWqlpxs-CKMA5-8tyOH7K/pub?gid=0&single=true&output=csv"))
+        .data
+        // Take the first column
+        .map(line => line && line[0])
+        // Remove empty lines
+        .filter(line => line);
+
+    // Shuffle funds by sorting them randomly
+    funds.sort(() => Math.random() - 0.5);
+    
+    return funds;
 }
 
-function shuffle_funds() {
-    for (let i = funds.length - 1; i >= 0; i--) {
-        let new_idx = Math.floor(Math.random() * (i + 1));
-        let previous = funds[new_idx];
-        funds[new_idx] = funds[i];
-        funds[i] = previous;
-    }
-}
-
-function find_payment_links(tweet) {
-    tweet = tweet.toString()
-
-    let venmo = tweet.match(/[Vv][Ee][Nn][Mm][Oo]:?\s*@?\s*([\w-]+)/)
+function findPaymentLinks(tweet) {
+    let venmo = tweet.match(/venmo:?\s*@?\s*([\w-]+)/i)
     if (venmo) {
         $(".payment_links")
             .append(`<a href="https://venmo.com/${venmo[1]}" target="_blank" rel="noopener noreferrer"><img alt="Venmo" height="64" width="64" src="https://cdn1.venmo.com/marketing/images/branding/venmo-icon.svg"/></a>`)
     }
 
-    let cashapp = tweet.match(/(\$[a-zA-Z][\w-]+)|[Cc][Aa][Ss][Hh]-?[Aa][Pp][Pp]:?\s*([a-zA-Z][\w-]+)/)
+    let cashapp = tweet.match(/(\$[a-zA-Z][\w-]+)|cash-?app:?\s*([a-zA-Z][\w-]+)/i)
     if (cashapp) {
         $(".payment_links")
             .append(`<a href="https://cash.me/${cashapp[2] || cashapp[1]}" target="_blank" rel="noopener noreferrer"><img alt="CashApp" height="64" width="64" src="https://cash.app/icon-196.png"/></a>`)
@@ -61,54 +42,37 @@ function find_payment_links(tweet) {
     }
 }
 
-function load_tweet(tweet) {
-    $(".fund_box").css("visibility", "hidden").css("background-color", "#FEFEFE").html(tweet)
-    $(".payment_links").empty().css("visibility", "hidden")
-    $(".loading").css("visibility", "visible")
-
-    let checkLoaded = null
-
-    let checkTimeout = setTimeout(() => {
-        clearInterval(checkLoaded)
-        $(".loading").css("visibility", "hidden")
-        $(".fund_box").html("<b>Couldn't load fund 😩<br>Please try again!</b>").css("visibility", "visible")
-    }, 5000)
-
-    checkLoaded = setInterval(() => {
-        let rendered = $(".fund_box").find(".twitter-tweet-rendered");
-        if (rendered) {
-            clearTimeout(checkTimeout)
-            clearInterval(checkLoaded)
-            $(".loading").css("visibility", "hidden")
-            setTimeout(() => {
-                find_payment_links(tweet)
-                $(".fund_box").css("visibility", "visible")
-            }, 500)
-        }
-    }, 500)
-}
-
-function render_fund(fund) {
-    if (fund.html) {
-        load_tweet(fund.html)
-    } else {
-        $(".fund_box").text(`Unable to fetch fund data for ${fund}`)
-    }
-
+async function loadTweet(tweet) {
     $(".fund_box_wrapper").css("visibility", "visible")
+    const tweetElement = $(tweet);
+    tweetElement.remove('script');
+    $(".fund_box").css("visibility", "hidden").css("background-color", "#FEFEFE").html(tweetElement)
+    $(".payment_links").empty().css("visibility", "hidden")
+    findPaymentLinks(tweet)
+    $(".fund_box").css("visibility", "visible")
 }
 
-$(function () {
+$(async function () {
+    let funds_idx = 0;
+    $(".button").css("opacity", 0.5)
+    const funds = await fetchFunds();
+    $(".button").css("opacity", 1)
+    window.history.replaceState({idx: 0}, null, "");
+    
     $(".button")
         .click(function () {
+            funds_idx++;
             if (funds_idx >= funds.length) {
                 funds_idx = 0;
             }
-
-            let fund = funds[funds_idx];
-            funds_idx++;
+            loadTweet(funds[funds_idx])
             window.history.pushState({idx: funds_idx}, null, "")
-
-            render_fund(fund)
         })
+        
+    $(window).on('popstate', function (event) {
+        if (event.originalEvent.state && typeof event.originalEvent.state.idx == 'number') {
+            funds_idx = event.originalEvent.state.idx;
+            loadTweet(funds[funds_idx])
+        }
+    })
 });

@@ -21,6 +21,22 @@
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:alt"
           content="A picture of a header reading 'redistribute.capital' and a button saying 'Find someone in need'" />
+    <script>window.twttr = (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+          if (d.getElementById(id)) return t;
+          js = d.createElement(s);
+          js.id = id;
+          js.src = "https://platform.twitter.com/widgets.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        
+          t._e = [];
+          t.ready = function(f) {
+            t._e.push(f);
+          };
+        
+          return t;
+        }(document, "script", "twitter-wjs"));</script>
 
     <title>redistribute.capital</title>
 
@@ -30,9 +46,6 @@
     <script src="./jquery-3.5.1.js"></script>
     <script src="./papa_parse.js"></script>
     <script src="./funds.js"></script>
-    <script>
-        fetch_funds().then(() => shuffle_funds())
-    </script>
 
     <style>
         body {
