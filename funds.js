@@ -101,12 +101,10 @@ function load_gofundme(gofundme) {
         clearInterval(checkLoaded)
         $(".loading").css("visibility", "hidden")
         $(".fund_box").html("<b>Couldn't load fund 😩<br>Please try again!</b>").css("visibility", "visible")
-        console.log("Couldn't load gofundme!")
     }, 5000)
 
     checkLoaded = setInterval(() => {
         let rendered = $(".fund_box").find(".gfm-embed-iframe");
-        console.log("Trying to load gofundme!")
         if (rendered) {
             clearTimeout(checkTimeout)
             clearInterval(checkLoaded)
@@ -114,7 +112,6 @@ function load_gofundme(gofundme) {
             setTimeout(() => {
                 $(".fund_box").css("visibility", "visible").attr("height", "500px")
                 $(".gfm-embed").attr("height", "450px")
-                console.log("Loaded gofundme!")
             }, 500)
         }
     }, 500)
@@ -147,7 +144,6 @@ function load_facebook(post) {
 }
 
 function render_fund(fund) {
-    console.log(JSON.stringify(fund))
     if (fund.type === 'tweet') {
         load_tweet(fund.html)
     } else if (fund.type === 'gofundme') {
