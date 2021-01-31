@@ -10,8 +10,8 @@
     <script>
         fetch_funds().then(() =>
             funds.forEach((fund, idx) => {
-                console.log(`${idx + 1}: '${fund.html}'`)
-                $("#tweet_table").append(`<tr><th>${idx + 1}</th><th>${fund.html}</th></tr>`)
+                console.log(JSON.stringify(fund))
+                $("#tweet_table").append(`<tr><th>${idx + 1}</th><th>${fund.html}</th><th>${fund.type}</th><th>${fund.sha}</th></tr>`)
             })
         )
     </script>

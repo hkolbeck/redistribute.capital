@@ -28,8 +28,11 @@ Papa.parsePromise = function(url) {
 };
 
 async function fetch_funds() {
-    await Papa.parsePromise("https://docs.google.com/spreadsheets/d/e/2PACX-1vTS4kW1Z4_14OBGebIDZLXeXWBpuHuAhtzhECJ1L_7FqXgO64uQgiukG6VfWqlpxs-CKMA5-8tyOH7K/pub?gid=0&single=true&output=csv")
-        .then(result => result.data.forEach(line => funds.push({html: line})))
+    await Papa.parsePromise("https://docs.google.com/spreadsheets/d/e/2PACX-1vSb-RukXOxGXgb29ULm7RwI_927JsNIwcBcWwHTSrNV1xKa_N81PXzgRUnyIcxF8Kg1r2JPJcw2FC1_/pub?gid=0&single=true&output=csv")
+        .then(result => result.data.forEach(line => {
+            console.log(JSON.stringify(line))
+            funds.push({html: line[0], type: line[1], sha: line[2]})
+        }))
 }
 
 function shuffle_funds() {
@@ -47,7 +50,7 @@ function find_payment_links(tweet) {
     let venmo = tweet.match(/[Vv][Ee][Nn][Mm][Oo]:?\s*@?\s*([\w-]+)/)
     if (venmo) {
         $(".payment_links")
-            .append(`<a href="https://venmo.com/${venmo[1]}" target="_blank" rel="noopener noreferrer"><img alt="Venmo" height="64" width="64" src="https://cdn1.venmo.com/marketing/images/branding/venmo-icon.svg"/></a>`)
+            .append(`<a href="https://venmo.com/?txn=pay&audience=private&recipients=${venmo[1]}" target="_blank" rel="noopener noreferrer"><img alt="Venmo" height="64" width="64" src="https://cdn1.venmo.com/marketing/images/branding/venmo-icon.svg"/></a>`)
     }
 
     let cashapp = tweet.match(/(\$[a-zA-Z][\w-]+)|[Cc][Aa][Ss][Hh]-?[Aa][Pp][Pp]:?\s*([a-zA-Z][\w-]+)/)
@@ -89,12 +92,15 @@ function load_tweet(tweet) {
 }
 
 function render_fund(fund) {
+    //
+
     if (fund.html) {
         load_tweet(fund.html)
     } else {
         $(".fund_box").text(`Unable to fetch fund data for ${fund}`)
     }
 
+    $(".report_bt").attr("href", `https://docs.google.com/forms/d/e/1FAIpQLSc_kpPJmD5VVRlh1OXjise7EiBEhJKVEaLJqYZLCI_nirHi2Q/viewform?usp=pp_url&entry.1420691641=${fund.sha}`)
     $(".fund_box_wrapper").css("visibility", "visible")
 }
 
