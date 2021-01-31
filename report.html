@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report a Scam</title>
+
+    <link rel="icon" href="https://lets.redistribute.capital/favicon.ico">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="./jquery-3.5.1.js"></script>
+    <script>
+        $(document).ready(() => {
+                const urlParams = new URLSearchParams(window.location.search)
+                let fid = urlParams.get("fid");
+                if (fid) {
+                    $(".form_wrapper").html(`<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc_kpPJmD5VVRlh1OXjise7EiBEhJKVEaLJqYZLCI_nirHi2Q/viewform?embedded=true&entry.1420691641=${fid}" width="640" height="700" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>`)
+                } else {
+                    $(".form_wrapper").html(`<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc_kpPJmD5VVRlh1OXjise7EiBEhJKVEaLJqYZLCI_nirHi2Q/viewform?embedded=true" width="640" height="700" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>`)
+                }
+            }
+        )
+    </script>
+
+    <style>
+        body {
+            background-color: #FEFEFE;
+            font-family: 'Open Sans', sans-serif;
+            letter-spacing: .1em;
+        }
+
+        h1 {
+            color: #5C5C5C;
+            font-size: 3em;
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+        .form_wrapper {
+            margin: 0 auto;
+            text-align: center;
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+<h1>redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span></h1>
+<div class="form_wrapper"></div>
+</body>
+</html>
