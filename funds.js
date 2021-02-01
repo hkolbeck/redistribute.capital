@@ -111,6 +111,7 @@ function load_tweet(tweet) {
             if (!timedOut) {
                 clearTimeout(checkTimeout)
                 loading.css("visibility", "hidden")
+                fundBox.css("visibility", "visible")
                 if (foundPayment) {
                     paymentLinks.css("visibility", "visible")
                 }
@@ -119,7 +120,7 @@ function load_tweet(tweet) {
     )
 
     fundBox.html(tweet)
-    twttr.widgets.load()
+    twttr.widgets.load(fundBox)
 }
 
 function load_gofundme(gofundme) {
