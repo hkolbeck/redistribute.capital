@@ -60,7 +60,7 @@ function shuffle_funds_weighted() {
             shuffled.push(fund)
     })
 
-    shuffled.sort((a, b) => b.weight - a.weight)
+    shuffled.sort((a, b) => a.weight - b.weight)
 
     funds = shuffled
 }
