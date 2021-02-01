@@ -47,7 +47,7 @@ Papa.parsePromise = function(url) {
 async function fetch_funds() {
     await Papa.parsePromise("https://docs.google.com/spreadsheets/d/e/2PACX-1vSb-RukXOxGXgb29ULm7RwI_927JsNIwcBcWwHTSrNV1xKa_N81PXzgRUnyIcxF8Kg1r2JPJcw2FC1_/pub?gid=0&single=true&output=csv")
         .then(result => result.data.forEach(line => {
-            funds.push({html: line[0], type: line[1], md5: line[2]})
+            funds.push({html: line[0], type: line[1], md5: line[2], expiry: line[3]})
         }))
 }
 
