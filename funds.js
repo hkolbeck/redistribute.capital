@@ -52,19 +52,30 @@ function shuffleFundsWeighted(funds) {
 function findPaymentLinks(tweet) {
     tweet = tweet.toString()
 
-    let venmo = tweet.match(/venmo:?\s*@?\s*([\w-]+)/i)
+    let venmo = tweet.match(/v[e3]?nm[o0]:?\s*@?\s*\/?\s*([\w-]+)|v[e3]?nm[o0]:?\s*<a href="https:\/\/twitter.com[^>]*@([\w-]+)/i)
     if (venmo) {
         $(".payment_links")
-            .append(`&nbsp;<a href="https://venmo.com/?txn=pay&audience=private&recipients=${venmo[1]}" target="_blank" rel="noopener noreferrer"><img alt="Venmo" height="64" width="64" src="https://cdn1.venmo.com/marketing/images/branding/venmo-icon.svg"/></a>&nbsp;`)
+            .append(`&nbsp;<a href="https://venmo.com/?txn=pay&audience=private&recipients=${venmo[1] || venmo[2]}" target="_blank" rel="noopener noreferrer"><img alt="Venmo" title="Venmo" height="64" width="64" src="https://cdn1.venmo.com/marketing/images/branding/venmo-icon.svg"/></a>&nbsp;`)
     }
 
-    let cashapp = tweet.match(/(\$[a-zA-Z][\w-]+)|cash[ -]?app:?\s*([a-zA-Z][\w-]+)/i)
+    let cashapp = tweet.match(/(\$[a-zA-Z][\w-]*)|ca?sh[ -]?app:?\s*([a-zA-Z][\w-]+)|ca?sh[- ]?app:?\s*<a href="([^"]+)"/i)
     if (cashapp) {
-        $(".payment_links")
-            .append(`&nbsp;<a href="https://cash.me/${cashapp[2] || cashapp[1]}" target="_blank" rel="noopener noreferrer"><img alt="CashApp" height="64" width="64" src="https://cash.app/icon-196.png"/></a>&nbsp;`)
+        if (cashapp[3]) {
+            $(".payment_links")
+                .append(`&nbsp;<a href="${cashapp[3]}" target="_blank" rel="noopener noreferrer"><img alt="CashApp" title="CashApp" height="64" width="64" src="https://cash.app/icon-196.png"/></a>&nbsp;`)
+        } else {
+            $(".payment_links")
+                .append(`&nbsp;<a href="https://cash.me/${cashapp[2] || cashapp[1]}" target="_blank" rel="noopener noreferrer"><img alt="CashApp" title="CashApp" height="64" width="64" src="https://cash.app/icon-196.png"/></a>&nbsp;`)
+        }
     }
 
-    return cashapp || venmo
+    let paypal = tweet.match(/pa?ypa?l:?\s*<a href="([^"]+)"/i)
+    if (paypal) {
+        $(".payment_links")
+            .append(`&nbsp;<a href="${paypal[1]}" target="_blank" rel="noopener noreferrer"><img alt="PayPal" title="PayPal" height="64" width="64" src="https://www.paypalobjects.com/webstatic/paypalme/images/social/pplogo384.png"/></a>&nbsp;`)
+    }
+
+    return cashapp || venmo || paypal
 }
 
 function loadTweet(tweet) {
