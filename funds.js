@@ -47,17 +47,22 @@ Papa.parsePromise = function(url) {
 async function fetch_funds() {
     await Papa.parsePromise("https://docs.google.com/spreadsheets/d/e/2PACX-1vSb-RukXOxGXgb29ULm7RwI_927JsNIwcBcWwHTSrNV1xKa_N81PXzgRUnyIcxF8Kg1r2JPJcw2FC1_/pub?gid=0&single=true&output=csv")
         .then(result => result.data.forEach(line => {
-            funds.push({html: line[0], type: line[1], md5: line[2], expiry: line[3]})
+            funds.push({html: line[0], type: line[1], md5: line[2], time: line[3]})
         }))
 }
 
-function shuffle_funds() {
-    for (let i = funds.length - 1; i >= 0; i--) {
-        let new_idx = Math.floor(Math.random() * (i + 1));
-        let previous = funds[new_idx];
-        funds[new_idx] = funds[i];
-        funds[i] = previous;
-    }
+function shuffle_funds_weighted() {
+    let shuffled = []
+    funds.forEach(fund => {
+        let fund_time = Date.parse(fund.time)
+        let now = Date.now();
+            fund.weight = Math.random() * (now - fund_time)
+            shuffled.push(fund)
+    })
+
+    shuffled.sort((a, b) => b.weight - a.weight)
+
+    funds = shuffled
 }
 
 function find_payment_links(tweet) {
