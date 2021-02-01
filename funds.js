@@ -1,24 +1,6 @@
-let funds = []
-let funds_idx = 0
-window.history.replaceState({idx: 0}, null, "")
-
-window.onpopstate = function (event) {
-    if (event.state) {
-        let state_idx = event.state.idx - 1
-        if (state_idx < 0) {
-            state_idx = funds.length - 1
-        }
-
-        funds_idx = state_idx
-    }
-
-    render_fund(funds[funds_idx])
-    funds_idx++
-}
-
-window.twttr = (function(d, s, id) {
+window.twttr = (function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0],
-    t = window.twttr || {};
+        t = window.twttr || {};
     if (d.getElementById(id)) return t;
     js = d.createElement(s);
     js.id = id;
@@ -26,55 +8,57 @@ window.twttr = (function(d, s, id) {
     fjs.parentNode.insertBefore(js, fjs);
 
     t._e = [];
-    t.ready = function(f) {
-    t._e.push(f);
-};
+    t.ready = function (f) {
+        t._e.push(f);
+    };
 
     return t;
 }(document, "script", "twitter-wjs"))
 
-Papa.parsePromise = function(url) {
-    return new Promise(function(complete, error) {
+function loadCsv(url) {
+    return new Promise(function (complete, error) {
         Papa.parse(url, {
             download: true,
             header: false,
             complete: complete,
             error: error
         });
-    });
-};
-
-async function fetch_funds() {
-    await Papa.parsePromise("https://docs.google.com/spreadsheets/d/e/2PACX-1vSb-RukXOxGXgb29ULm7RwI_927JsNIwcBcWwHTSrNV1xKa_N81PXzgRUnyIcxF8Kg1r2JPJcw2FC1_/pub?gid=0&single=true&output=csv")
-        .then(result => result.data.forEach(line => {
-            funds.push({html: line[0], type: line[1], md5: line[2], time: line[3]})
-        }))
+    })
 }
 
-function shuffle_funds_weighted() {
+async function fetchFunds() {
+    return (await loadCsv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSb-RukXOxGXgb29ULm7RwI_927JsNIwcBcWwHTSrNV1xKa_N81PXzgRUnyIcxF8Kg1r2JPJcw2FC1_/pub?gid=0&single=true&output=csv"))
+        .data
+        .filter(line => line && line.length === 4)
+        .map(line => {
+            return {html: line[0], type: line[1], md5: line[2], time: line[3]}
+        })
+}
+
+function shuffleFundsWeighted(funds) {
     let shuffled = []
     funds.forEach(fund => {
         let fund_time = Date.parse(fund.time)
         let now = Date.now();
-            let weighted_fund = {fund: fund, weight: Math.random() * (now - fund_time)}
-            shuffled.push(weighted_fund)
+        let weighted_fund = {fund: fund, weight: Math.random() * (now - fund_time)}
+        shuffled.push(weighted_fund)
     })
 
     shuffled.sort((a, b) => a.weight - b.weight)
 
-    funds = shuffled.map(f => f.fund)
+    return shuffled.map(f => f.fund)
 }
 
-function find_payment_links(tweet) {
+function findPaymentLinks(tweet) {
     tweet = tweet.toString()
 
-    let venmo = tweet.match(/[Vv][Ee][Nn][Mm][Oo]:?\s*@?\s*([\w-]+)/)
+    let venmo = tweet.match(/venmo:?\s*@?\s*([\w-]+)/i)
     if (venmo) {
         $(".payment_links")
             .append(`&nbsp;<a href="https://venmo.com/?txn=pay&audience=private&recipients=${venmo[1]}" target="_blank" rel="noopener noreferrer"><img alt="Venmo" height="64" width="64" src="https://cdn1.venmo.com/marketing/images/branding/venmo-icon.svg"/></a>&nbsp;`)
     }
 
-    let cashapp = tweet.match(/(\$[a-zA-Z][\w-]+)|[Cc][Aa][Ss][Hh]-?[Aa][Pp][Pp]:?\s*([a-zA-Z][\w-]+)/)
+    let cashapp = tweet.match(/(\$[a-zA-Z][\w-]+)|cash[ -]?app:?\s*([a-zA-Z][\w-]+)/i)
     if (cashapp) {
         $(".payment_links")
             .append(`&nbsp;<a href="https://cash.me/${cashapp[2] || cashapp[1]}" target="_blank" rel="noopener noreferrer"><img alt="CashApp" height="64" width="64" src="https://cash.app/icon-196.png"/></a>&nbsp;`)
@@ -83,7 +67,7 @@ function find_payment_links(tweet) {
     return cashapp || venmo
 }
 
-function load_tweet(tweet) {
+function loadTweet(tweet) {
     let loading = $(".loading");
     let fundBox = $(".fund_box");
     let paymentLinks = $(".payment_links");
@@ -103,7 +87,7 @@ function load_tweet(tweet) {
     }, 5000)
 
     tweet = tweet.replaceAll(/<script.*<\/script>/g, '')
-    let foundPayment = find_payment_links(tweet)
+    let foundPayment = findPaymentLinks(tweet)
 
     twttr.events.bind(
         'rendered',
@@ -123,7 +107,7 @@ function load_tweet(tweet) {
     twttr.widgets.load(fundBox)
 }
 
-function load_gofundme(gofundme) {
+function loadGofundme(gofundme) {
     $(".fund_box").css("visibility", "hidden").css("background-color", "#FEFEFE").html(gofundme)
     $(".payment_links").empty().css("visibility", "hidden")
     $(".loading").css("visibility", "visible")
@@ -150,7 +134,7 @@ function load_gofundme(gofundme) {
     }, 500)
 }
 
-function load_facebook(post) {
+function loadFacebook(post) {
     $(".fund_box").css("visibility", "hidden").css("background-color", "#FEFEFE").removeAttr("height").html(post)
     $(".payment_links").empty().css("visibility", "hidden")
     $(".loading").css("visibility", "visible")
@@ -176,13 +160,13 @@ function load_facebook(post) {
     }, 500)
 }
 
-function render_fund(fund) {
+function renderFund(fund) {
     if (fund.type === 'tweet') {
-        load_tweet(fund.html)
+        loadTweet(fund.html)
     } else if (fund.type === 'gofundme') {
-        load_gofundme(fund.html)
+        loadGofundme(fund.html)
     } else if (fund.type === 'facebook') {
-        load_facebook(fund.html)
+        loadFacebook(fund.html)
     } else {
         $(".fund_box").text(`Something went wrong. Please report this fund as broken by clicking the 💔 button in
         the lower left corner.`)
@@ -192,17 +176,38 @@ function render_fund(fund) {
     $(".fund_box_wrapper").css("visibility", "visible")
 }
 
-$(function () {
-    $(".button")
-        .click(function () {
-            if (funds_idx >= funds.length) {
-                funds_idx = 0;
+$(async function () {
+    let button = $(".button");
+    button.css("opacity", 0.5)
+    const funds = await fetchFunds().then(funds => shuffleFundsWeighted(funds));
+    button.css("opacity", 1)
+
+    window.history.replaceState({idx: 0, init: true}, null, "");
+
+    let funds_idx = 0
+    button.click(function () {
+        if (funds_idx >= funds.length) {
+            funds_idx = 0;
+        }
+
+        let fund = funds[funds_idx];
+        window.history.pushState({idx: funds_idx, init: false}, null, "")
+        funds_idx++;
+
+        renderFund(fund)
+    })
+
+    $(window).on('popstate', function (event) {
+        if (event.originalEvent.state && typeof event.originalEvent.state.idx == 'number') {
+            funds_idx = event.originalEvent.state.idx;
+
+            if (event.originalEvent.state.init) {
+                $(".fund_box_wrapper").css("visibility", "hidden")
+                $(".fund_box").find("iframe").css("visibility", "hidden")
+                $(".payment_links").css("visibility", "hidden")
+            } else {
+                renderFund(funds[funds_idx])
             }
-
-            let fund = funds[funds_idx];
-            funds_idx++;
-            window.history.pushState({idx: funds_idx}, null, "")
-
-            render_fund(fund)
-        })
+        }
+    })
 });
