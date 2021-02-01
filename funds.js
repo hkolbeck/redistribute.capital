@@ -16,6 +16,23 @@ window.onpopstate = function (event) {
     funds_idx++
 }
 
+window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+    t._e.push(f);
+};
+
+    return t;
+}(document, "script", "twitter-wjs"))
+
 Papa.parsePromise = function(url) {
     return new Promise(function(complete, error) {
         Papa.parse(url, {
@@ -58,36 +75,46 @@ function find_payment_links(tweet) {
             .append(`&nbsp;<a href="https://cash.me/${cashapp[2] || cashapp[1]}" target="_blank" rel="noopener noreferrer"><img alt="CashApp" height="64" width="64" src="https://cash.app/icon-196.png"/></a>&nbsp;`)
     }
 
-    if (cashapp || venmo) {
-        $(".payment_links").css("visibility", "visible")
-    }
+    return cashapp || venmo
 }
 
 function load_tweet(tweet) {
-    $(".fund_box").css("visibility", "hidden").css("background-color", "#FEFEFE").removeAttr("height").html(tweet)
-    $(".payment_links").empty().css("visibility", "hidden")
-    $(".loading").css("visibility", "visible")
+    let loading = $(".loading");
+    let fundBox = $(".fund_box");
+    let paymentLinks = $(".payment_links");
 
-    let checkLoaded = null
+    fundBox.css("visibility", "hidden").css("background-color", "#FEFEFE").removeAttr("height")
+    paymentLinks.empty().css("visibility", "hidden")
+    loading.css("visibility", "visible")
+
+    let timedOut = false
 
     let checkTimeout = setTimeout(() => {
-        clearInterval(checkLoaded)
-        $(".loading").css("visibility", "hidden")
-        $(".fund_box").html("<b>Couldn't load fund 😩<br>Please try again!</b>").css("visibility", "visible")
+        timedOut = true
+        loading.css("visibility", "hidden")
+        fundBox.html("<p><b>Couldn't load fund<br>Please try again!</b>")
+            .css("color", "#5C5C5C")
+            .css("visibility", "visible")
     }, 5000)
 
-    checkLoaded = setInterval(() => {
-        let rendered = $(".fund_box").find(".twitter-tweet-rendered");
-        if (rendered) {
-            clearTimeout(checkTimeout)
-            clearInterval(checkLoaded)
-            $(".loading").css("visibility", "hidden")
-            setTimeout(() => {
-                find_payment_links(tweet)
-                $(".fund_box").css("visibility", "visible")
-            }, 500)
+    tweet = tweet.replaceAll(/<script.*<\/script>/g, '')
+    let foundPayment = find_payment_links(tweet)
+
+    twttr.events.bind(
+        'rendered',
+        () => {
+            if (!timedOut) {
+                clearTimeout(checkTimeout)
+                loading.css("visibility", "hidden")
+                if (foundPayment) {
+                    paymentLinks.css("visibility", "visible")
+                }
+            }
         }
-    }, 500)
+    )
+
+    fundBox.html(tweet)
+    twttr.widgets.load()
 }
 
 function load_gofundme(gofundme) {
