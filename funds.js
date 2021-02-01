@@ -56,13 +56,13 @@ function shuffle_funds_weighted() {
     funds.forEach(fund => {
         let fund_time = Date.parse(fund.time)
         let now = Date.now();
-            fund.weight = Math.random() * (now - fund_time)
-            shuffled.push(fund)
+            let weighted_fund = {fund: fund, weight: Math.random() * (now - fund_time)}
+            shuffled.push(weighted_fund)
     })
 
     shuffled.sort((a, b) => a.weight - b.weight)
 
-    funds = shuffled
+    funds = shuffled.map(f => f.fund)
 }
 
 function find_payment_links(tweet) {
