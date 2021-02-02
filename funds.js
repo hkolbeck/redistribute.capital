@@ -1,5 +1,5 @@
 window.twttr = (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0],
+    let js, fjs = d.getElementsByTagName(s)[0],
         t = window.twttr || {};
     if (d.getElementById(id)) return t;
     js = d.createElement(s);
@@ -53,20 +53,22 @@ function shuffleFundsWeighted(funds) {
 function findPaymentLinks(tweet) {
     tweet = tweet.toString()
 
-    let venmo = tweet.match(/v[e3]?nm[o0]:?\s*@?\s*\/?\s*([\w-]+)|v[e3]?nm[o0]:?\s*<a href="https:\/\/twitter.com[^>]*@([\w-]+)/i)
+    let venmo = tweet.match(/v[e3]?nm[o0]:?\s*@?\s*\/?\s*([\w-]+)|v[e3]?nm[o0]:?\s*<a href="https:\/\/twitter.com[^>]>@([\w-]+)/i)
     if (venmo) {
+        let venmoUser = venmo[1] || venmo[2];
         $(".payment_links")
-            .append(`&nbsp;<a href="https://venmo.com/?txn=pay&audience=private&recipients=${venmo[1] || venmo[2]}" target="_blank" rel="noopener noreferrer"><img alt="Venmo" title="Venmo" height="64" width="64" src="https://cdn1.venmo.com/marketing/images/branding/venmo-icon.svg"/></a>&nbsp;`)
+            .append(`&nbsp;<a href="https://venmo.com/?txn=pay&audience=private&recipients=${venmoUser}" target="_blank" rel="noopener noreferrer"><img alt="Venmo ${venmoUser}" title="Venmo ${venmoUser}" height="64" width="64" src="https://cdn1.venmo.com/marketing/images/branding/venmo-icon.svg"/></a>&nbsp;`)
     }
 
     let cashapp = tweet.match(/(\$[a-zA-Z][\w-]*)|ca?sh[ -]?app:?\s*([a-zA-Z][\w-]+)|ca?sh[- ]?app:?\s*<a href="([^"]+)"/i)
     if (cashapp) {
         if (cashapp[3]) {
             $(".payment_links")
-                .append(`&nbsp;<a href="${cashapp[3]}" target="_blank" rel="noopener noreferrer"><img alt="CashApp" title="CashApp" height="64" width="64" src="https://cash.app/icon-196.png"/></a>&nbsp;`)
+                .append(`&nbsp;<a href="${cashapp[3]}" target="_blank" rel="noopener noreferrer"><img alt="CashApp ${cashapp[3]}" title="CashApp ${cashapp[3]}" height="64" width="64" src="https://cash.app/icon-196.png"/></a>&nbsp;`)
         } else {
+            let cashappUser = cashapp[2] || cashapp[1];
             $(".payment_links")
-                .append(`&nbsp;<a href="https://cash.me/${cashapp[2] || cashapp[1]}" target="_blank" rel="noopener noreferrer"><img alt="CashApp" title="CashApp" height="64" width="64" src="https://cash.app/icon-196.png"/></a>&nbsp;`)
+                .append(`&nbsp;<a href="https://cash.me/${cashappUser}" target="_blank" rel="noopener noreferrer"><img alt="CashApp ${cashappUser}" title="CashApp ${cashappUser}" height="64" width="64" src="https://cash.app/icon-196.png"/></a>&nbsp;`)
         }
     }
 
