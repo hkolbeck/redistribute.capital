@@ -26,6 +26,7 @@ function loadCsv(url) {
     })
 }
 
+// Testing: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQkrQ7pErJ2m9Or6cuClYtcK4vsI3eusDj080BxWEpgXDIxXoTe6InbbaZaMX39-D6RAXSQS2k8thFR/pub?gid=0&single=true&output=csv"
 async function fetchFunds() {
     return (await loadCsv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSb-RukXOxGXgb29ULm7RwI_927JsNIwcBcWwHTSrNV1xKa_N81PXzgRUnyIcxF8Kg1r2JPJcw2FC1_/pub?gid=0&single=true&output=csv"))
         .data
@@ -118,10 +119,45 @@ function loadTweet(tweet) {
     twttr.widgets.load(fundBox)
 }
 
-function loadGofundme(gofundme) {
-    $(".fund_box").css("visibility", "hidden").css("background-color", "#FEFEFE").html(gofundme)
+// GoFundMe's embed script assumes that embeds are static, and so doesn't work here
+// This is a minor tweak to their script designed to work similarly to twttr.widgets.load()
+function styleGoFundMe() {
+    try {
+        function n(t) {
+            let n = document.createElement("iframe");
+            n.setAttribute("class", "gfm-embed-iframe")
+            n.setAttribute("width", "100%")
+            n.setAttribute("height", "540")
+            n.setAttribute("frameborder", "0")
+            n.setAttribute("scrolling", "no")
+            n.setAttribute("src", t)
+            return n
+        }
+
+        window.addEventListener("message", function (t) {
+            t.data && ((function (t) {
+                return [].slice.call(document.getElementsByClassName("gfm-embed-iframe")).filter(function (e) {
+                    return e.contentWindow === t.source
+                })[0]
+            }(t)).height = t.data.offsetHeight)
+        }, !1)
+
+        let gfms = document.getElementsByClassName("gfm-embed");
+        for (let t = gfms, r = 0; r < t.length; r++) {
+            let i = n(t[r].getAttribute("data-url"));
+            t[r].appendChild(i)
+        }
+    } catch (t) {
+    }
+}
+
+function loadGoFundMe(gofundme) {
+    gofundme = gofundme.replaceAll(/<script.*<\/script>/g, '')
+
     $(".payment_links").empty().css("visibility", "hidden")
+    $(".fund_box").css("visibility", "hidden").css("background-color", "#FEFEFE").html(gofundme)
     $(".loading").css("visibility", "visible")
+    styleGoFundMe()
 
     let checkLoaded = null
 
@@ -175,7 +211,7 @@ function renderFund(fund) {
     if (fund.type === 'tweet') {
         loadTweet(fund.html)
     } else if (fund.type === 'gofundme') {
-        loadGofundme(fund.html)
+        loadGoFundMe(fund.html)
     } else if (fund.type === 'facebook') {
         loadFacebook(fund.html)
     } else {
@@ -191,8 +227,13 @@ $(async function () {
     let button = $(".button");
     button.css("opacity", 0.5)
     const funds = await fetchFunds().then(funds => shuffleFundsWeighted(funds));
-    button.css("opacity", 1)
 
+    if (funds && funds.length === 0) {
+        $(".fund_box_wrapper").html("<h2>Couldn't load fundraisers.<br>Please refresh the page to try again.</h2>").css("visibility", "visible")
+        return
+    }
+
+    button.css("opacity", 1)
     window.history.replaceState({idx: 0, init: true}, null, "");
 
     let funds_idx = 0

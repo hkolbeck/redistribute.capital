@@ -10,10 +10,10 @@
     <script src="3rdparty/papa_parse.js"></script>
     <script src="./funds.js"></script>
     <script>
-        fetch_funds().then(() =>
+        fetchFunds().then(funds =>
             funds.forEach((fund, idx) => {
                 console.log(JSON.stringify(fund))
-                $("#tweet_table").append(`<tr><th>${idx + 1}</th><th>${fund.html}</th><th>${fund.type}</th><th>${fund.md5}</th></tr>`)
+                $("#tweet_table").append(`<tr><th>${idx + 1}</th><th>${fund.html}</th><th>${fund.type}</th><th>${fund.md5}</th><th>${fund.time}</th></tr>`)
             })
         )
     </script>
