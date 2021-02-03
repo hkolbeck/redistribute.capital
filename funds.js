@@ -249,9 +249,18 @@ function getInitialState(funds) {
 }
 
 function updateShares(fundMd5) {
-    let encoded = encodeURIComponent(`https://redistribute.capital?fid=${fundMd5}`)
-    $(".fb_share_link").attr("href", `https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=${encoded}&display=popup&ref=plugin&src=share_button"`)
-    $(".twitter_share_link").attr("href", `https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fredistribute.capital%2F&ref_src=twsrc%5Etfw&text=Find%20people%20who%20need%20the%20%245%20you%20didn%27t%20spend%20on%20coffee%20today%20at&tw_p=tweetbutton&url=${encoded}`)
+    if (fundMd5) {
+        let encodedUrl = encodeURIComponent(`https://redistribute.capital?fid=${fundMd5}`)
+        let encodedMessage = encodeURIComponent("Check out this fundraiser on redistribute.capital")
+        $(".fb_share_link").attr("href", `https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=${encodedUrl}&display=popup&ref=plugin&src=share_button"`)
+        $(".twitter_share_link").attr("href", `https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fredistribute.capital%2F&ref_src=twsrc%5Etfw&text=${encodedMessage}&tw_p=tweetbutton&url=${encodedUrl}`)
+        $(".linkedin_share_link").attr("href", `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`)
+    } else {
+        let encodedUrl = encodeURIComponent(`https://redistribute.capital`)
+        $(".fb_share_link").attr("href", `https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=${encodedUrl}&display=popup&ref=plugin&src=share_button"`)
+        $(".twitter_share_link").attr("href", `https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fredistribute.capital%2F&ref_src=twsrc%5Etfw&text=Find%20people%20who%20need%20the%20%245%20you%20didn%27t%20spend%20on%20coffee%20today%20at&tw_p=tweetbutton&url=${encodedUrl}`)
+        $(".linkedin_share_link").attr("href", `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`)
+    }
 }
 
 $(async function () {
@@ -270,6 +279,7 @@ $(async function () {
 
     if (initialState.show) {
         renderFund(funds[fundsIdx])
+        fundsIdx++
     } else {
         $(".pitch").show()
     }
@@ -293,6 +303,7 @@ $(async function () {
 
             if (event.originalEvent.state.init) {
                 $(".fund_box").find("iframe").css("visibility", "hidden")
+                updateShares()
                 $(".payment_box").hide()
                 $(".report_box").hide()
                 $(".pitch").show()
