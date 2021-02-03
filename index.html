@@ -83,8 +83,12 @@
             cursor: pointer;
         }
 
-        .button:focus {
-            outline: 3px #1178EE;
+        :focus-visible {
+            outline: 100px #ff0000;
+        }
+
+        :focus {
+            outline: 100px #ff0000;
         }
 
         .pitch {
@@ -133,7 +137,7 @@
             height: 25px;
             top: 2%;
             right: 1%;
-            z-index: 1001;
+            z-index: 501;
         }
 
         .twitter_share_img {
@@ -185,7 +189,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1000;
+            z-index: 500;
         }
 
         .sticky + .content {
@@ -379,6 +383,21 @@
        class="backdrop"
        tabindex="-1"
        aria-hidden="true" hidden></a>
+
+    <span class="share_box">
+    <a class="fb_share_link" target="_blank"
+       href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https%3A%2F%2Fredistribute.capital%2F&display=popup&ref=plugin&src=share_button">
+        <img class="fb_share_img" src="img/fb_share.png" alt="Share on Facebook" title="Share on Facebook"/></a>
+
+    <a class="twitter_share_link" target="_blank"
+       href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fredistribute.capital%2F&ref_src=twsrc%5Etfw&text=Find%20people%20who%20need%20the%20%245%20you%20didn%27t%20spend%20on%20coffee%20today%20at&tw_p=tweetbutton&url=https%3A%2F%2Fredistribute.capital">
+        <img class="twitter_share_img" src="img/twitter_share.png" alt="Share on Twitter" title="Share on Twitter"/></a>
+
+    <a class="linkedin_share_link" target="_blank"
+       href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fredistribute.capital">
+        <img class="linkedin_share_img" src="img/linkedin_share.png" alt="Share on LinkedIn"
+             title="Share on LinkedIn"/></a>
+</span>
 </div>
 <div class="content">
     <br>
@@ -413,20 +432,6 @@
     <div class="report_box">
         <a href="report.html" class="report_link" target="_blank">Something wrong with this fund?</a>
     </div>
-    <span class="share_box">
-    <a class="fb_share_link" target="_blank"
-       href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https%3A%2F%2Fredistribute.capital%2F&display=popup&ref=plugin&src=share_button">
-        <img class="fb_share_img" src="img/fb_share.png" alt="Share on Facebook" title="Share on Facebook"/></a>
-
-    <a class="twitter_share_link" target="_blank"
-       href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fredistribute.capital%2F&ref_src=twsrc%5Etfw&text=Find%20people%20who%20need%20the%20%245%20you%20didn%27t%20spend%20on%20coffee%20today%20at&tw_p=tweetbutton&url=https%3A%2F%2Fredistribute.capital">
-        <img class="twitter_share_img" src="img/twitter_share.png" alt="Share on Twitter" title="Share on Twitter"/></a>
-
-    <a class="linkedin_share_link" target="_blank"
-       href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fredistribute.capital">
-        <img class="linkedin_share_img" src="img/linkedin_share.png" alt="Share on LinkedIn"
-             title="Share on LinkedIn"/></a>
-</span>
 </div>
 </body>
 </html>
