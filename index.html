@@ -44,6 +44,7 @@
             font-weight: 600;
             text-align: center;
             width: 100%;
+            margin-top: 50px;
         }
 
         h3 {
@@ -74,13 +75,16 @@
             border: 0;
             border-radius: 25px;
             display: block;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 2% auto 1%;
         }
 
         .button:hover {
-            background-color: #1178ee;
+            background-color: #1178EE;
             cursor: pointer;
+        }
+
+        .button:focus {
+            outline: 3px #1178EE;
         }
 
         .pitch {
@@ -119,7 +123,7 @@
             display: none;
             position: fixed;
             bottom: 1%;
-            left: 1%;
+            right: 1%;
             font-size: 0.5em;
         }
 
@@ -127,8 +131,9 @@
             display: block;
             position: fixed;
             height: 25px;
-            bottom: 1%;
+            top: 2%;
             right: 1%;
+            z-index: 1001;
         }
 
         .twitter_share_img {
@@ -164,6 +169,24 @@
             line-height: 64px;
         }
 
+        .content {
+            padding: 16px;
+            width: 70%;
+            margin: 0 auto;
+        }
+
+        .sticky {
+            background-color: #FEFEFE;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .sticky + .content {
+            padding-top: 102px;
+        }
+
         @media (max-width: 480px) {
 
             h1 {
@@ -180,52 +203,208 @@
             }
         }
 
-    </style>
+        /* blah */
 
+        /* Screen reader only */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* Button styling */
+        .menu-toggle {
+            display: inline-block;
+            position: absolute;
+            left: 1%;
+            top: 1%;
+            padding: .75em 15px;
+            line-height: 1em;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .menu-toggle:hover,
+        .menu-toggle:focus {
+            color: #c00;
+        }
+
+        /*
+         Default styles + Mobile first
+         Offscreen menu style
+        */
+        .main-menu {
+            position: absolute;
+            display: none;
+            left: -200px;
+            top: 0;
+            height: 100%;
+            overflow-y: scroll;
+            overflow-x: visible;
+            transition: left 0.3s ease,
+            box-shadow 0.3s ease;
+            z-index: 999;
+        }
+
+        .main-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 2.5em 0 0;
+            /* Hide shadow w/ -8px while 'closed' */
+            -webkit-box-shadow: -8px 0 8px rgba(0, 0, 0, .5);
+            -moz-box-shadow: -8px 0 8px rgba(0, 0, 0, .5);
+            box-shadow: -8px 0 8px rgba(0, 0, 0, .5);
+            min-height: 100%;
+            width: 200px;
+            background: #1a1a1a;
+        }
+
+        .main-menu a {
+            display: block;
+            padding: .75em 15px;
+            line-height: 1em;
+            font-size: 1em;
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 1px solid #383838;
+        }
+
+        .main-menu li:first-child a {
+            border-top: 1px solid #383838;
+        }
+
+        .main-menu a:hover,
+        .main-menu a:focus {
+            background: #333;
+            text-decoration: underline;
+        }
+
+        .main-menu .menu-close {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .main-menu:target,
+        .main-menu[aria-expanded="true"] {
+            display: block;
+            left: 0;
+            outline: none;
+            -moz-box-shadow: 3px 0 12px rgba(0, 0, 0, .25);
+            -webkit-box-shadow: 3px 0 12px rgba(0, 0, 0, .25);
+            box-shadow: 3px 0 12px rgba(0, 0, 0, .25);
+        }
+
+        .main-menu:target .menu-close,
+        .main-menu[aria-expanded="true"] .menu-close {
+            z-index: 1001;
+        }
+
+        .main-menu:target ul,
+        .main-menu[aria-expanded="true"] ul {
+            position: relative;
+            z-index: 1000;
+        }
+
+        /*
+         We could us `.main-menu:target:after`, but
+         it wouldn't be clickable.
+        */
+        .main-menu:target + .backdrop,
+        .main-menu[aria-expanded="true"] + .backdrop {
+            position: absolute;
+            display: block;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 998;
+            background: #000;
+            background: rgba(0, 0, 0, .85);
+            cursor: default;
+        }
+
+        @supports (position: fixed) {
+            .main-menu,
+            .main-menu:target + .backdrop,
+            .main-menu[aria-expanded="true"] + .backdrop {
+                position: fixed;
+            }
+        }
+    </style>
 </head>
 <body>
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v9.0"
-        nonce="gVyrkTT1"></script>
+<div class="sticky">
+    <a href="#main-menu"
+       id="main-menu-toggle"
+       class="menu-toggle"
+       aria-label="Open main menu">
+        <span class="sr-only">Open main menu</span>
+        <span class="fa fa-bars"
+              aria-hidden="true"><img src="img/hamburger.svg" alt="Menu" title="Menu"></span>
+    </a>
 
-<h1>redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span></h1>
-<br>
+    <h1>redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span></h1>
 
-<button type="submit" class="button"> Find someone in need &#9829;</button>
+    <nav id="main-menu" class="main-menu" aria-label="Main menu">
+        <a href="#main-menu-toggle"
+           id="main-menu-close"
+           class="menu-close"
+           aria-label="Close main menu">
+            <span class="sr-only">Close main menu</span>
+            <span class="fa fa-close" aria-hidden="true"></span>
+            redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span>
+        </a>
+        <ul>
+            <li><a href="add.html">Add a Fund</a></li>
+            <li><a href="faq.html">F.A.Q.</a></li>
+            <li><a class="report_link" href="report.html">Report a Fund</a></li>
+        </ul>
+    </nav>
+    <a href="#main-menu-toggle"
+       class="backdrop"
+       tabindex="-1"
+       aria-hidden="true" hidden></a>
+</div>
+<div class="content">
+    <br>
+    <button type="submit" class="button"> Find someone in need &#9829;</button>
 
-<br>
-
-<div class="fund_box_wrapper">
-    <div class="pitch">
-        <h3>
-            Our goal is to connect small dollar donors with fundraisers for marginalized individuals and
-            families. Find people who need the $5 you didn't spend on coffee today and make their lives better.
-        </h3>
-        <div class="disclaimer">
-            <p>
-                All fundraisers are vetted to the best of our ability. If you find a fundraiser that appears broken or
-                that you believe is a scam, please report it. For more information, please read the
-                <a href="faq.html">F.A.Q.</a>
-            </p>
+    <div class="fund_box_wrapper">
+        <div class="pitch">
+            <h3>
+                Our goal is to connect small dollar donors with fundraisers for marginalized individuals and
+                families. Find people who need the $5 you didn't spend on coffee today and make their lives better.
+            </h3>
+            <div class="disclaimer">
+                <p>
+                    All fundraisers are vetted to the best of our ability. If you find a fundraiser that appears broken
+                    or that you believe is a scam, please report it. For more information, please read the
+                    <a href="faq.html">F.A.Q.</a>
+                </p>
+            </div>
+        </div>
+        <img src="img/loading.svg" class="loading" alt="loading"/>
+        <div class="fund_box"></div>
+        <div class="payment_box">
+            <table class="payment_table">
+                <tr>
+                    <th><span class="help_out">Help out:</span></th>
+                    <th><span class="payment_links"></span></th>
+                </tr>
+            </table>
         </div>
     </div>
-    <img src="img/loading.svg" class="loading" alt="loading"/>
-    <div class="fund_box"></div>
-    <div class="payment_box">
-        <table class="payment_table">
-            <tr>
-                <th><span class="help_out">Help out:</span></th>
-                <th><span class="payment_links"></span></th>
-            </tr>
-        </table>
+
+    <div class="report_box">
+        <a href="report.html" class="report_link" target="_blank">Something wrong with this fund?</a>
     </div>
-</div>
-<div>
-</div>
-<div class="report_box">
-    <a href="report.html" class="report_link" target="_blank">Something wrong with this fund?</a>
-</div>
-<span class="share_box">
+    <span class="share_box">
     <a class="fb_share_link" target="_blank"
        href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https%3A%2F%2Fredistribute.capital%2F&display=popup&ref=plugin&src=share_button">
         <img class="fb_share_img" src="img/fb_share.png" alt="Share on Facebook" title="Share on Facebook"/></a>
@@ -234,5 +413,6 @@
        href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fredistribute.capital%2F&ref_src=twsrc%5Etfw&text=Find%20people%20who%20need%20the%20%245%20you%20didn%27t%20spend%20on%20coffee%20today%20at&tw_p=tweetbutton&url=https%3A%2F%2Fredistribute.capital">
         <img class="twitter_share_img" src="img/twitter_share.png" alt="Share on Twitter" title="Share on Twitter"/></a>
 </span>
+</div>
 </body>
 </html>

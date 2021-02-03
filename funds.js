@@ -223,7 +223,8 @@ function renderFund(fund) {
         $(".fund_box").text(`Something went wrong. Please report this fund as broken by clicking the 💔 button in the lower left corner.`)
     }
 
-    $(".report_bt").attr("href", `./report.html?fid=${fund.md5}`)
+    $(".report_link").attr("href", `./report.html?fid=${fund.md5}`)
+    $(".report_box").show()
     updateShares(fund.md5)
     $(".fund_box_wrapper").css("visibility", "visible")
 }
@@ -293,7 +294,7 @@ $(async function () {
             if (event.originalEvent.state.init) {
                 $(".fund_box").find("iframe").css("visibility", "hidden")
                 $(".payment_links").css("visibility", "hidden")
-                $(".report_bt").attr("href", `./report.html`)
+                $(".report_box").hide()
                 $(".pitch").show()
             } else {
                 renderFund(funds[fundsIdx])
