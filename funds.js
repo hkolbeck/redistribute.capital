@@ -84,10 +84,9 @@ function findPaymentLinks(tweet) {
 function loadTweet(tweet) {
     let loading = $(".loading");
     let fundBox = $(".fund_box");
-    let paymentLinks = $(".payment_links");
+    let paymentBox = $(".payment_box");
 
     fundBox.css("visibility", "hidden").css("background-color", "#FEFEFE").removeAttr("height")
-    paymentLinks.empty().css("visibility", "hidden")
     loading.css("visibility", "visible")
 
     let timedOut = false
@@ -111,7 +110,9 @@ function loadTweet(tweet) {
                 loading.css("visibility", "hidden")
                 fundBox.css("visibility", "visible")
                 if (foundPayment) {
-                    paymentLinks.css("visibility", "visible")
+                    paymentBox.show()
+                } else {
+                    paymentBox.hide()
                 }
             }
         }
@@ -156,7 +157,6 @@ function styleGoFundMe() {
 function loadGoFundMe(gofundme) {
     gofundme = gofundme.replaceAll(/<script.*<\/script>/g, '')
 
-    $(".payment_links").empty().css("visibility", "hidden")
     $(".fund_box").css("visibility", "hidden").css("background-color", "#FEFEFE").html(gofundme)
     $(".loading").css("visibility", "visible")
     styleGoFundMe()
@@ -185,7 +185,6 @@ function loadGoFundMe(gofundme) {
 
 function loadFacebook(post) {
     $(".fund_box").css("visibility", "hidden").css("background-color", "#FEFEFE").removeAttr("height").html(post)
-    $(".payment_links").empty().css("visibility", "hidden")
     $(".loading").css("visibility", "visible")
 
     let checkLoaded = null
@@ -210,6 +209,10 @@ function loadFacebook(post) {
 }
 
 function renderFund(fund) {
+    $(".pitch").hide()
+    $(".payment_box").hide()
+    $(".payment_links").empty()
+
     if (fund.type === 'tweet') {
         loadTweet(fund.html)
     } else if (fund.type === 'gofundme') {
@@ -217,12 +220,55 @@ function renderFund(fund) {
     } else if (fund.type === 'facebook') {
         loadFacebook(fund.html)
     } else {
-        $(".fund_box").text(`Something went wrong. Please report this fund as broken by clicking the 💔 button in
-        the lower left corner.`)
+        $(".fund_box").text(`Something went wrong. Please report this fund as broken by clicking the 💔 button in the lower left corner.`)
     }
 
     $(".report_bt").attr("href", `./report.html?fid=${fund.md5}`)
+    updateShares(fund.md5)
     $(".fund_box_wrapper").css("visibility", "visible")
+}
+
+function getInitialState(funds) {
+    let params = new URLSearchParams(window.location.search)
+    let fid = params.get("fid")
+
+    if (fid) {
+        let idx = funds.findIndex(fund => fund.md5 === fid);
+        if (idx < 0) {
+            $(".fund_box")
+                .html("<h2>The requested fund is no longer available, press the button to find another one</h2>")
+            $(".fund_box_wrapper").css("visibility", "visible")
+            return {idx: 0, show: false, query: ""}
+        } else {
+            return {idx: idx, show: true, query: `?fid=${fid}`};
+        }
+    } else {
+        return {idx: 0, show: false, query: ""};
+    }
+}
+
+function updateShares(fundMd5) {
+    let shareBox = $(".share_box")
+    let twitterWrapper = $(".twitter_wrapper");
+    let fbWrapper = $(".fb_wrapper");
+
+    shareBox.hide()
+
+    twitterWrapper.html(`<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+           data-text="Find people who need the $5 you didn&#39;t spend on coffee today"
+           data-show-count="false">Tweet</a>`
+    )
+    twttr.widgets.load(twitterWrapper)
+
+    fbWrapper.empty()
+    let encodedUrl = encodeURIComponent(`https://redistribute.capital?fid=${fundMd5}`)
+    fbWrapper.html(`<div class="fb-share-button" data-href="https://redistribute.capital?fid=${fundMd5}" data-layout="button" data-size="small"><a
+                target="_blank"
+                href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&amp;src=sdkpreparse"
+                class="fb-xfbml-parse-ignore">Share</a></div>`)
+    FB.XFBML.parse();
+
+    shareBox.show()
 }
 
 $(async function () {
@@ -231,36 +277,44 @@ $(async function () {
     const funds = await fetchFunds().then(funds => shuffleFundsWeighted(funds));
 
     if (funds && funds.length === 0) {
-        $(".fund_box_wrapper").html("<h2>Couldn't load fundraisers.<br>Please refresh the page to try again.</h2>").css("visibility", "visible")
+        $(".fund_box_wrapper").html("<h2>Couldn't load fundraisers.<br>Please refresh the page to try again.</h2>")
         return
     }
 
-    button.css("opacity", 1)
-    window.history.replaceState({idx: 0, init: true}, null, "");
+    let initialState = getInitialState(funds)
+    let fundsIdx = initialState.idx
+    window.history.replaceState({idx: initialState.idx, init: true}, null, initialState.query);
 
-    let funds_idx = 0
+    if (initialState.show) {
+        renderFund(funds[fundsIdx])
+    } else {
+        $(".pitch").show()
+    }
+
     button.click(function () {
-        if (funds_idx >= funds.length) {
-            funds_idx = 0;
+        if (fundsIdx >= funds.length) {
+            fundsIdx = 0;
         }
 
-        let fund = funds[funds_idx];
-        window.history.pushState({idx: funds_idx, init: false}, null, "")
-        funds_idx++;
+        let fund = funds[fundsIdx];
+        window.history.pushState({idx: fundsIdx, init: false}, null, `?fid=${fund.md5}`)
+        fundsIdx++;
 
         renderFund(fund)
     })
+    button.css("opacity", 1)
 
     $(window).on('popstate', function (event) {
         if (event.originalEvent.state && typeof event.originalEvent.state.idx == 'number') {
-            funds_idx = event.originalEvent.state.idx;
+            fundsIdx = event.originalEvent.state.idx;
 
             if (event.originalEvent.state.init) {
-                $(".fund_box_wrapper").css("visibility", "hidden")
                 $(".fund_box").find("iframe").css("visibility", "hidden")
                 $(".payment_links").css("visibility", "hidden")
+                $(".report_bt").attr("href", `./report.html`)
+                $(".pitch").show()
             } else {
-                renderFund(funds[funds_idx])
+                renderFund(funds[fundsIdx])
             }
         }
     })

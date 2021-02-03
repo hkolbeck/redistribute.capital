@@ -46,6 +46,20 @@
             width: 100%;
         }
 
+        h3 {
+            color: #5C5C5C;
+            font-size: 2em;
+            font-weight: 400;
+            text-align: center;
+            width: 100%;
+        }
+
+
+        a, a:visited {
+            color: #5C5C5C;
+            font-weight: 600;
+        }
+
         .button {
             color: #FEFEFE;
             background-color: #59A0F3;
@@ -69,8 +83,17 @@
             cursor: pointer;
         }
 
+        .pitch {
+            display: none;
+            width: 45%;
+            margin: 0 auto;
+        }
+
+        .disclaimer {
+            font-size: 0.5em;
+        }
+
         .fund_box_wrapper {
-            visibility: hidden;
             max-width: 100%;
             text-align: center;
             margin: 0 auto;
@@ -92,16 +115,21 @@
             visibility: hidden;
         }
 
-        .twitter_box {
-            position: fixed;
-            bottom: 1%;
-            right: 1%;
-        }
-
         .misc_box {
             position: fixed;
             bottom: 1%;
             left: 1%;
+        }
+
+        .share_box {
+            position: fixed;
+            bottom: 1%;
+            right: 1%;
+            display: inline-flex !important;
+        }
+
+        .twitter_wrapper {
+            margin-top: 2px;
         }
 
         .link_icon {
@@ -109,8 +137,27 @@
             max-width: 36px;
         }
 
-        .payment_links {
+        .payment_box {
+            margin-left: auto;
+            margin-right: auto;
+            display: none;
             margin-top: -120px;
+            height: 64px;
+        }
+
+        .payment_table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .help_out {
+            color: #5C5C5C;
+            font-size: 2em;
+            font-weight: 200;
+            text-align: right;
+            align-content: center;
+            height: 64px;
+            line-height: 64px;
         }
 
         @media (max-width: 480px) {
@@ -133,6 +180,10 @@
 
 </head>
 <body>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v9.0"
+        nonce="gVyrkTT1"></script>
+
 <h1>redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span></h1>
 <br>
 
@@ -141,17 +192,31 @@
 <br>
 
 <div class="fund_box_wrapper">
+    <div class="pitch">
+        <h3>
+            Our goal is to connect small dollar donors with fundraisers for marginalized individuals and
+            families. Find people who need the $5 you didn't spend on coffee today and make their lives better.
+        </h3>
+        <div class="disclaimer">
+            <p>
+                All fundraisers are vetted to the best of our ability. If you find a fundraiser that appears broken or
+                that you believe is a scam, please report it. For more info, please read the
+                <a href="faq.html">F.A.Q.</a>
+            </p>
+        </div>
+    </div>
     <img src="img/loading.svg" class="loading" alt="loading"/>
     <div class="fund_box"></div>
-    <div class="payment_links"></div>
+    <div class="payment_box">
+        <table class="payment_table">
+            <tr>
+                <th><span class="help_out">Help out:</span></th>
+                <th><span class="payment_links"></span></th>
+            </tr>
+        </table>
+    </div>
 </div>
 <div>
-</div>
-<div class="twitter_box">
-    <a href="https://twitter.com/hbeckpdx" target="_blank" rel="noopener noreferrer"><img class="link_icon"
-                                                                                          src="img/twitter_logo.png"
-                                                                                          title="@hbeckpdx's twitter feed"
-                                                                                          alt="Link to creator's Twitter"></a>
 </div>
 <div class="misc_box">
     <a href="./report.html"
@@ -169,6 +234,20 @@
                                                                         src="img/add.png"
                                                                         title="Add a Fund"
                                                                         alt="Add a Fund"></a>
+</div>
+<div class="share_box">
+    <div class="fb_wrapper">
+        <div class="fb-share-button" data-href="https://redistribute.capital" data-layout="button" data-size="small"><a
+                target="_blank"
+                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fredistribute.capital%2F&amp;src=sdkpreparse"
+                class="fb-xfbml-parse-ignore">Share</a></div>
+    </div>
+    &nbsp;
+    <span class="twitter_wrapper">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+           data-text="Find people who need the $5 you didn&#39;t spend on coffee today"
+           data-show-count="false">Tweet</a>
+    </span>
 </div>
 </body>
 </html>
