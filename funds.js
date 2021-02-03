@@ -293,11 +293,12 @@ $(async function () {
 
             if (event.originalEvent.state.init) {
                 $(".fund_box").find("iframe").css("visibility", "hidden")
-                $(".payment_links").css("visibility", "hidden")
+                $(".payment_box").hide()
                 $(".report_box").hide()
                 $(".pitch").show()
             } else {
                 renderFund(funds[fundsIdx])
+                fundsIdx++
             }
         }
     })
