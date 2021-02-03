@@ -97,10 +97,10 @@
             max-width: 100%;
             text-align: center;
             margin: 0 auto;
-
         }
 
         .fund_box {
+            color: #5C5C5C;
             background-color: #FEFEFE;
             font-size: 24pt;
             position: relative;
@@ -115,26 +115,30 @@
             visibility: hidden;
         }
 
-        .misc_box {
+        .report_box {
+            display: none;
             position: fixed;
             bottom: 1%;
             left: 1%;
+            font-size: 0.5em;
         }
 
         .share_box {
+            display: block;
             position: fixed;
+            height: 25px;
             bottom: 1%;
             right: 1%;
-            display: inline-flex !important;
         }
 
-        .twitter_wrapper {
-            margin-top: 2px;
+        .twitter_share_img {
+            height: 100%;
+            width: auto;
         }
 
-        .link_icon {
-            max-height: 36px;
-            max-width: 36px;
+        .fb_share_img {
+            height: 100%;
+            width: auto;
         }
 
         .payment_box {
@@ -200,7 +204,7 @@
         <div class="disclaimer">
             <p>
                 All fundraisers are vetted to the best of our ability. If you find a fundraiser that appears broken or
-                that you believe is a scam, please report it. For more info, please read the
+                that you believe is a scam, please report it. For more information, please read the
                 <a href="faq.html">F.A.Q.</a>
             </p>
         </div>
@@ -218,36 +222,17 @@
 </div>
 <div>
 </div>
-<div class="misc_box">
-    <a href="./report.html"
-       class="report_bt" target="_blank" rel="noopener noreferrer"><img class="link_icon"
-                                                                        src="img/report.png"
-                                                                        title="Report a Scam or Broken Fundraiser"
-                                                                        alt="Report a Scam or Broken Fundraiser"></a>
-
-    <a href="./faq.html" target="_blank" rel="noopener noreferrer"><img class="link_icon"
-                                                                        src="img/faq.png"
-                                                                        title="F.A.Q."
-                                                                        alt="F.A.Q."></a>
-
-    <a href="./add.html" target="_blank" rel="noopener noreferrer"><img class="link_icon"
-                                                                        src="img/add.png"
-                                                                        title="Add a Fund"
-                                                                        alt="Add a Fund"></a>
+<div class="report_box">
+    <a href="report.html" class="report_link" target="_blank">Something wrong with this fund?</a>
 </div>
-<div class="share_box">
-    <div class="fb_wrapper">
-        <div class="fb-share-button" data-href="https://redistribute.capital" data-layout="button" data-size="small"><a
-                target="_blank"
-                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fredistribute.capital%2F&amp;src=sdkpreparse"
-                class="fb-xfbml-parse-ignore">Share</a></div>
-    </div>
-    &nbsp;
-    <span class="twitter_wrapper">
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-           data-text="Find people who need the $5 you didn&#39;t spend on coffee today"
-           data-show-count="false">Tweet</a>
-    </span>
-</div>
+<span class="share_box">
+    <a class="fb_share_link" target="_blank"
+       href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https%3A%2F%2Fredistribute.capital%2F&display=popup&ref=plugin&src=share_button">
+        <img class="fb_share_img" src="img/fb_share.png" alt="Share on Facebook" title="Share on Facebook"/></a>
+
+    <a class="twitter_share_link" target="_blank"
+       href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fredistribute.capital%2F&ref_src=twsrc%5Etfw&text=Find%20people%20who%20need%20the%20%245%20you%20didn%27t%20spend%20on%20coffee%20today%20at&tw_p=tweetbutton&url=https%3A%2F%2Fredistribute.capital">
+        <img class="twitter_share_img" src="img/twitter_share.png" alt="Share on Twitter" title="Share on Twitter"/></a>
+</span>
 </body>
 </html>
