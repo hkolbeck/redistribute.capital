@@ -248,27 +248,9 @@ function getInitialState(funds) {
 }
 
 function updateShares(fundMd5) {
-    let shareBox = $(".share_box")
-    let twitterWrapper = $(".twitter_wrapper");
-    let fbWrapper = $(".fb_wrapper");
-
-    shareBox.hide()
-
-    twitterWrapper.html(`<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-           data-text="Find people who need the $5 you didn&#39;t spend on coffee today"
-           data-show-count="false">Tweet</a>`
-    )
-    twttr.widgets.load(twitterWrapper)
-
-    fbWrapper.empty()
-    let encodedUrl = encodeURIComponent(`https://redistribute.capital?fid=${fundMd5}`)
-    fbWrapper.html(`<div class="fb-share-button" data-href="https://redistribute.capital?fid=${fundMd5}" data-layout="button" data-size="small"><a
-                target="_blank"
-                href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&amp;src=sdkpreparse"
-                class="fb-xfbml-parse-ignore">Share</a></div>`)
-    FB.XFBML.parse();
-
-    shareBox.show()
+    let encoded = encodeURIComponent(`https://redistribute.capital?fid=${fundMd5}`)
+    $(".fb_share_link").attr("href", `https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=${encoded}&display=popup&ref=plugin&src=share_button"`)
+    $(".twitter_share_link").attr("href", `https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fredistribute.capital%2F&ref_src=twsrc%5Etfw&text=Find%20people%20who%20need%20the%20%245%20you%20didn%27t%20spend%20on%20coffee%20today%20at&tw_p=tweetbutton&url=${encoded}`)
 }
 
 $(async function () {
