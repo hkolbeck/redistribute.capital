@@ -33,13 +33,63 @@
             display: block;
         }
 
+        .content {
+            padding: 16px;
+            width: 70%;
+            margin: 0 auto;
+        }
+
+        .sticky {
+            background-color: #FEFEFE;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 500;
+        }
+
+        .sticky + .content {
+            padding-top: 102px;
+        }
     </style>
+    <link rel="stylesheet" href="menu.css"/>
 </head>
 <body>
-<h1>redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span></h1>
-<div class="form_wrapper">
-    <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLSdhPzHc-NIpkTWjYtICet4flhleg5M1IO-ybyFgObEJH2t5eQ/viewform?embedded=true" width="640" height="650" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+<div class="sticky">
+    <a href="#main-menu"
+       id="main-menu-toggle"
+       class="menu-toggle"
+       aria-label="Open main menu">
+        <span class="sr-only">Open main menu</span>
+        <span class="fa fa-bars"
+              aria-hidden="true"><img src="img/hamburger.svg" alt="Menu" title="Menu"></span>
+    </a>
+
+    <h1>redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span></h1>
+
+    <nav id="main-menu" class="main-menu" aria-label="Main menu">
+        <a href="index.html"
+           id="main-menu-close"
+           class="menu-close"
+           aria-label="Close main menu">
+            <span class="sr-only">Close main menu</span>
+            <span class="fa fa-close" aria-hidden="true"></span>
+            redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span>
+        </a>
+        <ul>
+            <li><a href="faq.html">Frequently Asked Questions</a></li>
+            <li><a href="report.html">Report a Fund</a></li>
+        </ul>
+    </nav>
+    <a href="#main-menu-toggle"
+       class="backdrop"
+       tabindex="-1"
+       aria-hidden="true" hidden></a>
+</div>
+<div class="content">
+    <div class="form_wrapper">
+        <iframe
+                src="https://docs.google.com/forms/d/e/1FAIpQLSdhPzHc-NIpkTWjYtICet4flhleg5M1IO-ybyFgObEJH2t5eQ/viewform?embedded=true" width="640" height="650" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    </div>
 </div>
 </body>
 </html>
