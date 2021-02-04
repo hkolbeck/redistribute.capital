@@ -1,0 +1,332 @@
+body {
+    background-color: #FEFEFE;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: .1em;
+}
+
+h1 {
+    color: #474747;
+    font-size: 3em;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    margin-top: 50px;
+}
+
+h3 {
+    color: #474747;
+    font-size: 2em;
+    font-weight: 400;
+    text-align: center;
+    width: 100%;
+}
+
+p{
+    color: #1A1A1A.
+}
+
+a, a:visited {
+    color: #474747;
+    font-weight: 600;
+}
+
+.button {
+    color: #FEFEFE;
+    background-color: #59A0F3;
+    max-width: 500px;
+    width: 50%;
+    max-height: 25%;
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5em;
+    font-weight: 400;
+    text-align: center;
+    border: 0;
+    border-radius: 25px;
+    display: block;
+    margin: 2% auto 1%;
+}
+
+.button:hover {
+    background-color: #1178EE;
+    cursor: pointer;
+}
+
+:focus-visible {
+    outline: 100px #ff0000;
+}
+
+:focus {
+    outline: 100px #ff0000;
+}
+
+.pitch {
+    display: none;
+    width: 45%;
+    margin: 0 auto;
+}
+
+.disclaimer {
+    font-size: 0.5em;
+}
+
+.fund_box_wrapper {
+    max-width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.fund_box {
+    color: #474747;
+    background-color: #FEFEFE;
+    font-size: 24pt;
+    position: relative;
+    margin: 0 auto;
+    top: -128px;
+    max-width: 500px;
+}
+
+.loading {
+    position: relative;
+    top: 256px;
+    visibility: hidden;
+}
+
+.report_box {
+    display: none;
+    position: fixed;
+    bottom: 1%;
+    right: 1%;
+    font-size: 0.5em;
+}
+
+.share_box {
+    display: block;
+    position: fixed;
+    height: 25px;
+    top: 2%;
+    right: 1%;
+    z-index: 501;
+}
+
+.twitter_share_img {
+    height: 100%;
+    width: auto;
+}
+
+.fb_share_img {
+    height: 100%;
+    width: auto;
+}
+
+.linkedin_share_img {
+    height: 100%;
+    width: auto;
+}
+
+.payment_box {
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+    margin-top: -120px;
+    height: 64px;
+}
+
+.payment_table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.help_out {
+    color: #474747;
+    font-size: 2em;
+    font-weight: 200;
+    text-align: right;
+    align-content: center;
+    height: 64px;
+    line-height: 64px;
+}
+
+.content {
+    padding: 16px;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.sticky {
+    background-color: #FEFEFE;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 500;
+}
+
+.sticky + .content {
+    padding-top: 102px;
+}
+
+
+/* Mobile Style Changes */
+@media (max-width: 480px) {
+
+    h1 {
+        font-size: 2em;
+    }
+    
+    h3{
+        font-size: 1em;
+    }
+    
+    p{
+        font-size: .5em;
+    }
+    
+    .content {
+        width: 95%;
+    }
+    
+    .button {
+        font-size: 1.25em;
+        width: 100%;
+    }
+
+    .fund_box_wrapper {
+        width: 100%
+    }
+
+    .pitch {
+        width: 100%;
+    }
+}
+
+/* Screen reader only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Button styling */
+.menu-toggle {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: .75em 15px;
+    line-height: 1em;
+    font-size: 1em;
+    color: #333;
+}
+
+.menu-toggle:hover,
+.menu-toggle:focus {
+    color: #c00;
+}
+
+/*
+ Default styles + Mobile first
+ Offscreen menu style
+*/
+.main-menu {
+    position: absolute;
+    display: none;
+    left: -200px;
+    top: 0;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: visible;
+    transition: left 0.3s ease,
+    box-shadow 0.3s ease;
+    z-index: 999;
+}
+
+.main-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 2.5em 0 0;
+    /* Hide shadow w/ -8px while 'closed' */
+    -webkit-box-shadow: -8px 0 8px rgba(0, 0, 0, .5);
+    -moz-box-shadow: -8px 0 8px rgba(0, 0, 0, .5);
+    box-shadow: -8px 0 8px rgba(0, 0, 0, .5);
+    min-height: 100%;
+    width: 200px;
+    background: #1a1a1a;
+}
+
+.main-menu a {
+    display: block;
+    padding: .75em 15px;
+    line-height: 1em;
+    font-size: 1em;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid #383838;
+}
+
+.main-menu li:first-child a {
+    border-top: 1px solid #383838;
+}
+
+.main-menu a:hover,
+.main-menu a:focus {
+    background: #333;
+    text-decoration: underline;
+}
+
+.main-menu .menu-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.main-menu:target,
+.main-menu[aria-expanded="true"] {
+    display: block;
+    left: 0;
+    outline: none;
+    -moz-box-shadow: 3px 0 12px rgba(0, 0, 0, .25);
+    -webkit-box-shadow: 3px 0 12px rgba(0, 0, 0, .25);
+    box-shadow: 3px 0 12px rgba(0, 0, 0, .25);
+}
+
+.main-menu:target .menu-close,
+.main-menu[aria-expanded="true"] .menu-close {
+    z-index: 1001;
+}
+
+.main-menu:target ul,
+.main-menu[aria-expanded="true"] ul {
+    position: relative;
+    z-index: 1000;
+}
+
+/*
+ We could us `.main-menu:target:after`, but
+ it wouldn't be clickable.
+*/
+.main-menu:target + .backdrop,
+.main-menu[aria-expanded="true"] + .backdrop {
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 998;
+    background: #000;
+    background: rgba(0, 0, 0, .85);
+    cursor: default;
+}
+
+@supports (position: fixed) {
+    .main-menu,
+    .main-menu:target + .backdrop,
+    .main-menu[aria-expanded="true"] + .backdrop {
+        position: fixed;
+    }
+}
