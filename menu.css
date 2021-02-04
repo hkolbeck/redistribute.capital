@@ -19,12 +19,7 @@
     padding: .75em 15px;
     line-height: 1em;
     font-size: 1em;
-    color: #333;
-}
-
-.menu-toggle:hover,
-.menu-toggle:focus {
-    color: #c00;
+    /*color: #333;*/
 }
 
 /*
@@ -69,12 +64,6 @@
 
 .main-menu li:first-child a {
     border-top: 1px solid #383838;
-}
-
-.main-menu a:hover,
-.main-menu a:focus {
-    background: #333;
-    text-decoration: underline;
 }
 
 .main-menu .menu-close {
