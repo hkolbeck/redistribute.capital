@@ -223,7 +223,6 @@ function renderFund(fund) {
         $(".fund_box").text(`Something went wrong. Please report this fund as broken by clicking the 💔 button in the lower left corner.`)
     }
 
-    $(".report_link").attr("href", `./report.html?fid=${fund.md5}`)
     $(".report_box").show()
     updateShares(fund.md5)
     $(".fund_box_wrapper").css("visibility", "visible")
@@ -232,6 +231,7 @@ function renderFund(fund) {
 function getInitialState(funds) {
     let params = new URLSearchParams(window.location.search)
     let fid = params.get("fid")
+    let sessionIdx = window.sessionStorage.getItem("fundsIdx")
 
     if (fid) {
         let idx = funds.findIndex(fund => fund.md5 === fid);
@@ -243,6 +243,8 @@ function getInitialState(funds) {
         } else {
             return {idx: idx, show: true, query: `?fid=${fid}`};
         }
+    } else if (sessionIdx) {
+        return {idx: sessionIdx, show: true, query: `?fid=${funds[sessionIdx].md5}`}
     } else {
         return {idx: 0, show: false, query: ""};
     }
@@ -266,51 +268,64 @@ function updateShares(fundMd5) {
 $(async function () {
     let button = $(".button");
     button.css("opacity", 0.5)
-    const funds = await fetchFunds().then(funds => shuffleFundsWeighted(funds));
 
-    if (funds && funds.length === 0) {
+    let funds = null
+    let sessionFunds = window.sessionStorage.getItem("funds");
+    if (sessionFunds) {
+        funds = JSON.parse(sessionFunds)
+    } else {
+        funds = await fetchFunds().then(funds => shuffleFundsWeighted(funds));
+        window.sessionStorage.setItem("funds", JSON.stringify(funds))
+    }
+
+    if (!funds || funds.length === 0) {
         $(".fund_box_wrapper").html("<h2>Couldn't load fundraisers.<br>Please refresh the page to try again.</h2>")
         return
     }
 
     let initialState = getInitialState(funds)
     let fundsIdx = initialState.idx
+    window.sessionStorage.setItem("fundsIdx", fundsIdx)
     window.history.replaceState({idx: initialState.idx, init: true}, null, initialState.query);
 
-    if (initialState.show) {
-        renderFund(funds[fundsIdx])
-        fundsIdx++
-    } else {
-        $(".pitch").show()
-    }
-
-    button.click(function () {
-        if (fundsIdx >= funds.length) {
-            fundsIdx = 0;
+    twttr.ready(() => {
+        if (initialState.show) {
+            renderFund(funds[fundsIdx])
+            fundsIdx++
+        } else {
+            $(".pitch").show()
         }
 
-        let fund = funds[fundsIdx];
-        window.history.pushState({idx: fundsIdx, init: false}, null, `?fid=${fund.md5}`)
-        fundsIdx++;
-
-        renderFund(fund)
-    })
-    button.css("opacity", 1)
-
-    $(window).on('popstate', function (event) {
-        if (event.originalEvent.state && typeof event.originalEvent.state.idx == 'number') {
-            fundsIdx = event.originalEvent.state.idx;
-
-            if (event.originalEvent.state.init) {
-                $(".fund_box").find("iframe").css("visibility", "hidden")
-                updateShares()
-                $(".payment_box").hide()
-                $(".report_box").hide()
-                $(".pitch").show()
-            } else {
-                renderFund(funds[fundsIdx])
-                fundsIdx++
+        button.click(function () {
+            if (fundsIdx >= funds.length) {
+                fundsIdx = 0;
             }
-        }
+
+            let fund = funds[fundsIdx];
+            window.sessionStorage.setItem("fundsIdx", fundsIdx)
+            window.history.pushState({idx: fundsIdx, init: false}, null, `?fid=${fund.md5}`)
+            fundsIdx++;
+
+            renderFund(fund)
+        })
+        button.css("opacity", 1)
+
+        $(window).on('popstate', function (event) {
+            if (event.originalEvent.state && typeof event.originalEvent.state.idx == 'number') {
+                fundsIdx = event.originalEvent.state.idx;
+                window.sessionStorage.setItem("fundsIdx", fundsIdx)
+
+                if (event.originalEvent.state.init) {
+                    $(".fund_box").find("iframe").css("visibility", "hidden")
+                    updateShares()
+                    $(".payment_box").hide()
+                    $(".report_box").hide()
+                    $(".pitch").show()
+                } else {
+                    renderFund(funds[fundsIdx])
+                    fundsIdx++
+                }
+            }
+        })
     })
 });

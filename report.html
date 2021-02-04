@@ -15,9 +15,11 @@
     <script src="3rdparty/jquery-3.5.1.js"></script>
     <script>
         $(document).ready(() => {
-                const urlParams = new URLSearchParams(window.location.search)
-                let fid = urlParams.get("fid");
-                if (fid) {
+                let rawFunds = window.sessionStorage.getItem("funds")
+                let fundsIdx = window.sessionStorage.getItem("fundsIdx")
+                if (rawFunds && fundsIdx) {
+                    let funds = JSON.parse(rawFunds);
+                    let fid = funds[fundsIdx].md5
                     $(".form_wrapper").html(`<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc_kpPJmD5VVRlh1OXjise7EiBEhJKVEaLJqYZLCI_nirHi2Q/viewform?embedded=true&entry.1420691641=${fid}" width="640" height="700" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>`)
                 } else {
                     $(".form_wrapper").html(`<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc_kpPJmD5VVRlh1OXjise7EiBEhJKVEaLJqYZLCI_nirHi2Q/viewform?embedded=true" width="640" height="700" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>`)
