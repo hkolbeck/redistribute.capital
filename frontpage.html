@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="https://lets.redistribute.capital/img/favicon.ico">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@RedistCapital"/>
+    <meta name="twitter:creator" content="@hbeckpdx"/>
+    <meta name="twitter:image" content="https://lets.redistribute.capital/img/preview_twitter.png">
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="redistribute.capital"/>
+    <meta property="og:url" content="https://redistribute.capital"/>
+    <meta property="og:description" content="Find people who need the $5 you didn't spend on coffee today."/>
+    <meta property="og:image" content="https://lets.redistribute.capital/img/preview_open_graph.png"/>
+    <meta property="og:image:secure_url" content="https://lets.redistribute.capital/img/preview_open_graph.png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:type" content="image/png"/>
+    <meta property="og:image:alt"
+          content="A picture of a header reading 'redistribute.capital' and a button saying 'Find someone in need'"/>
+
+    <title>redistribute.capital</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <script
+            src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+            crossorigin="anonymous"></script>
+    <script src="3rdparty/papa_parse.js"></script>
+    <script src="./funds.js"></script>
+
+    <link rel="stylesheet" href="menu.css"/>
+    <link rel="stylesheet" href="shared.css"/>
+    <link rel="stylesheet" href="index.css"/>
+</head>
+<body>
+<div class="sticky">
+    <a tabindex="0" href="#main-menu"
+       id="main-menu-toggle"
+       class="menu-toggle"
+       aria-label="Open main menu">
+        <span class="sr-only">Open main menu</span>
+        <span class="fa fa-bars"
+              aria-hidden="true"><img src="img/hamburger.svg" alt="Menu" title="Menu"></span>
+    </a>
+
+    <h1>redistribute<span class="capital">.capital</span></h1>
+
+    <nav id="main-menu" class="main-menu" aria-label="Main menu">
+        <a href="#main-menu-toggle"
+           id="main-menu-close"
+           class="menu-close"
+           aria-label="Close main menu">
+            <span class="sr-only">Close main menu</span>
+            <span class="fa fa-close" aria-hidden="true"></span>
+            redistribute<span class="capital">.capital</span>
+        </a>
+        <ul>
+            <li><a tabindex="0" href="add.html">Add a Fund</a></li>
+            <li><a tabindex="0" href="report.html">Report a Fund</a></li>
+            <li><a tabindex="0" href="faq.html">Frequently Asked Questions</a></li>
+            <li><a tabindex="0" href="terms-of-use.html">Terms Of Use</a></li>
+        </ul>
+    </nav>
+    <a href="#main-menu-toggle"
+       class="backdrop"
+       tabindex="-1"
+       aria-hidden="true" hidden></a>
+
+    <span class="share_box">
+    <a tabindex="0" class="fb_share_link" target="_blank"
+       href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=https%3A%2F%2Fredistribute.capital%2F&display=popup&ref=plugin&src=share_button">
+        <img class="share_img" src="img/fb_share.png" alt="Share on Facebook" title="Share on Facebook"/></a>
+
+    <a tabindex="0" class="twitter_share_link" target="_blank"
+       href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fredistribute.capital%2F&ref_src=twsrc%5Etfw&text=Find%20people%20who%20need%20the%20%245%20you%20didn%27t%20spend%20on%20coffee%20today%20at&tw_p=tweetbutton&url=https%3A%2F%2Fredistribute.capital">
+        <img class="share_img" src="img/twitter_share.png" alt="Share on Twitter" title="Share on Twitter"/></a>
+
+    <a tabindex="0" class="linkedin_share_link" target="_blank"
+       href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fredistribute.capital">
+        <img class="share_img" src="img/linkedin_share.png" alt="Share on LinkedIn"
+             title="Share on LinkedIn"/></a>
+</span>
+</div>
+<div class="content">
+    <button tabindex="0" type="submit" class="button"> Find someone in need &#9829;</button>
+
+    <div class="fund_box_wrapper">
+        <div class="pitch">
+            <h3>
+                <p>
+                    redistribute<span class="capital">.capital</span> is not yet ready for
+                    general use. Please do not follow any link, payment or otherwise, that leads off of this domain.
+                <p>
+                    Our goal is to connect small dollar donors with fundraisers for marginalized individuals and
+                    families. Find people who need the $5 you didn't spend on coffee today and make their lives better.
+            </h3>
+            <div class="disclaimer">
+                <p>
+                    We cannot make guarantees about fundraiser validity or earnestness. If you find a fundraiser that
+                    appears broken or that you believe is a scam, please report it. For more information about avoiding
+                    scams please read the <a href="faq.html">F.A.Q.</a>
+                </p>
+            </div>
+        </div>
+        <img src="img/loading.svg" class="loading" alt="loading"/>
+        <div class="fund_box"></div>
+        <div class="payment_box">
+            <table class="payment_table">
+                <tr>
+                    <th><span class="help_out">Help out:</span></th>
+                    <th><span class="payment_links"></span></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="report_box">
+        <a tabindex="0" href="report.html" target="_blank">Something wrong with this fund?</a>
+    </div>
+</div>
+</body>
+</html>
