@@ -114,4 +114,8 @@
     .pitch {
         width: 85%;
     }
+
+    .help_out {
+        font-size: 1em;
+    }
 }
