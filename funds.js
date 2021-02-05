@@ -81,7 +81,7 @@ function findPaymentLinks(tweet) {
     return cashapp || venmo || paypal
 }
 
-function loadTweetById(tweet) {
+function loadTweet(tweet) {
     let loading = $(".loading");
     let fundBox = $(".fund_box");
     let paymentBox = $(".payment_box");
@@ -123,8 +123,9 @@ function loadTweetById(tweet) {
     twttr.widgets.createTweet(tweetId, fundBoxEl, {align: "center", conversation: "none", dnt: "true"})
         .then((el) => {
             if (el) {
+                // This seems racey. Better way to handle it?
+                clearTimeout(checkTimeout)
                 if (!timedOut) {
-                    clearTimeout(checkTimeout)
                     loading.css("visibility", "hidden")
                     fundBox.css("visibility", "visible")
                     if (foundPayment) {
@@ -203,7 +204,7 @@ function loadGoFundMe(gofundme) {
     }, 500)
 }
 
-function loadFacebook(post) {
+function loadFacebookPost(post) {
     $(".fund_box").css("visibility", "hidden").css("background-color", "#FEFEFE").removeAttr("height").html(post)
     $(".loading").css("visibility", "visible")
 
@@ -234,11 +235,11 @@ function renderFund(fund) {
     $(".payment_links").empty()
 
     if (fund.type === 'tweet') {
-        loadTweetById(fund.html)
+        loadTweet(fund.html)
     } else if (fund.type === 'gofundme') {
         loadGoFundMe(fund.html)
     } else if (fund.type === 'facebook') {
-        loadFacebook(fund.html)
+        loadFacebookPost(fund.html)
     } else {
         $(".fund_box").text("Something went wrong, please report this fund as broken.")
     }

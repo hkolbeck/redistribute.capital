@@ -1,0 +1,117 @@
+.button {
+    color: #FEFEFE;
+    background-color: #59A0F3;
+    max-width: 500px;
+    width: 50%;
+    max-height: 25%;
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5em;
+    font-weight: 400;
+    text-align: center;
+    border: 0;
+    border-radius: 25px;
+    display: block;
+    margin: 5% auto 1%;
+}
+
+.button:hover {
+    background-color: #1178EE;
+    cursor: pointer;
+}
+
+.pitch {
+    display: none;
+    width: 45%;
+    margin: 0 auto;
+}
+
+.disclaimer {
+    font-size: 0.5em;
+}
+
+.fund_box_wrapper {
+    max-width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.fund_box {
+    color: #5C5C5C;
+    background-color: #FEFEFE;
+    font-size: 24pt;
+    position: relative;
+    margin: 0 auto;
+    top: -128px;
+    max-width: 500px;
+    z-index: 0;
+}
+
+.loading {
+    position: relative;
+    top: 256px;
+    visibility: hidden;
+}
+
+.report_box {
+    display: none;
+    position: fixed;
+    bottom: 1%;
+    right: 1%;
+    font-size: 0.7em;
+}
+
+.share_box {
+    display: block;
+    position: fixed;
+    height: 25px;
+    top: 2%;
+    right: 1%;
+    z-index: 501;
+}
+
+.share_img {
+    height: 100%;
+    width: auto;
+    vertical-align: top;
+}
+
+.payment_box {
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+    margin-top: -120px;
+    height: 64px;
+}
+
+.payment_table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.help_out {
+    color: #5C5C5C;
+    font-size: 2em;
+    font-weight: 200;
+    text-align: right;
+    align-content: center;
+    height: 64px;
+    line-height: 64px;
+}
+
+
+@media (max-width: 480px) {
+
+    .button {
+        font-size: 1.25em;
+        width: 85%;
+    }
+
+    .fund_box_wrapper {
+        width: 85%
+    }
+
+    .pitch {
+        width: 85%;
+    }
+}

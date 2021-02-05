@@ -31,183 +31,9 @@
     <script src="3rdparty/papa_parse.js"></script>
     <script src="./funds.js"></script>
 
-    <style>
-        body {
-            background-color: #FEFEFE;
-            font-family: 'Open Sans', sans-serif;
-            letter-spacing: .1em;
-        }
-
-        h1 {
-            color: #5C5C5C;
-            font-size: 3em;
-            font-weight: 600;
-            text-align: center;
-            width: 100%;
-            margin-top: 50px;
-        }
-
-        h3 {
-            color: #5C5C5C;
-            font-size: 2em;
-            font-weight: 400;
-            text-align: center;
-            width: 100%;
-        }
-
-        a, a:visited {
-            color: #5C5C5C;
-            font-weight: 600;
-        }
-
-        .button {
-            color: #FEFEFE;
-            background-color: #59A0F3;
-            max-width: 500px;
-            width: 50%;
-            max-height: 25%;
-            padding: 10px;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1.5em;
-            font-weight: 400;
-            text-align: center;
-            border: 0;
-            border-radius: 25px;
-            display: block;
-            margin: 5% auto 1%;
-        }
-
-        .button:hover {
-            background-color: #1178EE;
-            cursor: pointer;
-        }
-
-        :focus {
-            outline: none;
-        }
-
-        :focus-visible {
-            outline: none;
-            box-shadow: 0 0 0 3px #1178EE;
-        }
-
-        .pitch {
-            display: none;
-            width: 45%;
-            margin: 0 auto;
-        }
-
-        .disclaimer {
-            font-size: 0.5em;
-        }
-
-        .fund_box_wrapper {
-            max-width: 100%;
-            text-align: center;
-            margin: 0 auto;
-        }
-
-        .fund_box {
-            color: #5C5C5C;
-            background-color: #FEFEFE;
-            font-size: 24pt;
-            position: relative;
-            margin: 0 auto;
-            top: -128px;
-            max-width: 500px;
-        }
-
-        .loading {
-            position: relative;
-            top: 256px;
-            visibility: hidden;
-        }
-
-        .report_box {
-            display: none;
-            position: fixed;
-            bottom: 1%;
-            right: 1%;
-            font-size: 0.7em;
-        }
-
-        .share_box {
-            display: block;
-            position: fixed;
-            height: 25px;
-            top: 2%;
-            right: 1%;
-            z-index: 501;
-        }
-
-        .share_img {
-            height: 100%;
-            width: auto;
-            vertical-align: top;
-        }
-
-        .payment_box {
-            margin-left: auto;
-            margin-right: auto;
-            display: none;
-            margin-top: -120px;
-            height: 64px;
-        }
-
-        .payment_table {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .help_out {
-            color: #5C5C5C;
-            font-size: 2em;
-            font-weight: 200;
-            text-align: right;
-            align-content: center;
-            height: 64px;
-            line-height: 64px;
-        }
-
-        .content {
-            padding: 16px;
-            width: 70%;
-            margin: 0 auto;
-        }
-
-        .sticky {
-            background-color: #FEFEFE;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 500;
-        }
-
-        .sticky + .content {
-            padding-top: 102px;
-        }
-
-        @media (max-width: 480px) {
-
-            h1 {
-                font-size: 2em;
-            }
-
-            .button {
-                font-size: 1.25em;
-                width: 85%;
-            }
-
-            .fund_box_wrapper {
-                width: 85%
-            }
-
-            .pitch {
-                width: 85%;
-            }
-        }
-    </style>
     <link rel="stylesheet" href="menu.css"/>
+    <link rel="stylesheet" href="shared.css"/>
+    <link rel="stylesheet" href="index.css"/>
 </head>
 <body>
 <div class="sticky">
@@ -220,7 +46,7 @@
               aria-hidden="true"><img src="img/hamburger.svg" alt="Menu" title="Menu"></span>
     </a>
 
-    <h1>redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span></h1>
+    <h1>redistribute<span class="capital">.capital</span></h1>
 
     <nav id="main-menu" class="main-menu" aria-label="Main menu">
         <a href="#main-menu-toggle"
@@ -229,12 +55,13 @@
            aria-label="Close main menu">
             <span class="sr-only">Close main menu</span>
             <span class="fa fa-close" aria-hidden="true"></span>
-            redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span>
+            redistribute<span class="capital">.capital</span>
         </a>
         <ul>
             <li><a tabindex="0" href="add.html">Add a Fund</a></li>
             <li><a tabindex="0" href="report.html">Report a Fund</a></li>
             <li><a tabindex="0" href="faq.html">Frequently Asked Questions</a></li>
+            <li><a tabindex="0" href="terms-of-use.html">Terms Of Use</a></li>
         </ul>
     </nav>
     <a href="#main-menu-toggle"
@@ -264,7 +91,7 @@
         <div class="pitch">
             <h3>
                 <p>
-                    redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span> is not yet ready for
+                    redistribute<span class="capital">.capital</span> is not yet ready for
                     general use. Please do not follow any link, payment or otherwise, that leads off of this domain.
                 <p>
                     Our goal is to connect small dollar donors with fundraisers for marginalized individuals and

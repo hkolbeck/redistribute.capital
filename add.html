@@ -12,20 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="menu.css"/>
+    <link rel="stylesheet" href="shared.css"/>
     <style>
-        body {
-            background-color: #FEFEFE;
-            font-family: 'Open Sans', sans-serif;
-            letter-spacing: .1em;
-        }
-
-        h1 {
-            color: #5C5C5C;
-            font-size: 3em;
-            font-weight: 600;
-            text-align: center;
-            width: 100%;
-        }
 
         .form_wrapper {
             margin: 0 auto;
@@ -33,25 +22,7 @@
             display: block;
         }
 
-        .content {
-            padding: 16px;
-            width: 70%;
-            margin: 0 auto;
-        }
-
-        .sticky {
-            background-color: #FEFEFE;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 500;
-        }
-
-        .sticky + .content {
-            padding-top: 102px;
-        }
     </style>
-    <link rel="stylesheet" href="menu.css"/>
 </head>
 <body>
 <div class="sticky">
@@ -64,7 +35,7 @@
               aria-hidden="true"><img src="img/hamburger.svg" alt="Menu" title="Menu"></span>
     </a>
 
-    <h1>redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span></h1>
+    <h1>redistribute<span class="capital">.capital</span></h1>
 
     <nav id="main-menu" class="main-menu" aria-label="Main menu">
         <a href="index.html"
@@ -73,11 +44,12 @@
            aria-label="Close main menu">
             <span class="sr-only">Close main menu</span>
             <span class="fa fa-close" aria-hidden="true"></span>
-            redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span>
+            redistribute<span class="capital">.capital</span>
         </a>
         <ul>
-            <li><a href="faq.html">Frequently Asked Questions</a></li>
             <li><a href="report.html">Report a Fund</a></li>
+            <li><a href="faq.html">Frequently Asked Questions</a></li>
+            <li><a href="terms-of-use.html">Terms Of Use</a></li>
         </ul>
     </nav>
     <a href="#main-menu-toggle"
@@ -88,7 +60,8 @@
 <div class="content">
     <div class="form_wrapper">
         <iframe
-                src="https://docs.google.com/forms/d/e/1FAIpQLSdhPzHc-NIpkTWjYtICet4flhleg5M1IO-ybyFgObEJH2t5eQ/viewform?embedded=true" width="640" height="650" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                src="https://docs.google.com/forms/d/e/1FAIpQLSdhPzHc-NIpkTWjYtICet4flhleg5M1IO-ybyFgObEJH2t5eQ/viewform?embedded=true"
+                width="640" height="650" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
     </div>
 </div>
 </body>
