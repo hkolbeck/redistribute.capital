@@ -81,16 +81,35 @@ function findPaymentLinks(tweet) {
     return cashapp || venmo || paypal
 }
 
-function loadTweet(tweet) {
+function loadTweetById(tweet) {
     let loading = $(".loading");
     let fundBox = $(".fund_box");
     let paymentBox = $(".payment_box");
 
     fundBox.css("visibility", "hidden").css("background-color", "#FEFEFE").removeAttr("height")
+    fundBox.empty()
     loading.css("visibility", "visible")
 
-    let timedOut = false
 
+    let tweetId = null
+    if (tweet.match(/^\d+$/)) {
+        tweetId = tweet
+    } else {
+        let status = tweet.match(/status\/(\d+)/)
+        if (status && status.length === 2) {
+            tweetId = status[1]
+        }
+    }
+
+    if (!tweetId) {
+        loading.css("visibility", "hidden")
+        fundBox.html("<p><b>Couldn't load fund<br>Please try again!</b>")
+            .css("color", "#5C5C5C")
+            .css("visibility", "visible")
+        return
+    }
+
+    let timedOut = false
     let checkTimeout = setTimeout(() => {
         timedOut = true
         loading.css("visibility", "hidden")
@@ -99,27 +118,28 @@ function loadTweet(tweet) {
             .css("visibility", "visible")
     }, 5000)
 
-    tweet = tweet.replaceAll(/<script.*<\/script>/g, '')
     let foundPayment = findPaymentLinks(tweet)
-
-    twttr.events.bind(
-        'rendered',
-        () => {
-            if (!timedOut) {
-                clearTimeout(checkTimeout)
-                loading.css("visibility", "hidden")
-                fundBox.css("visibility", "visible")
-                if (foundPayment) {
-                    paymentBox.show()
-                } else {
-                    paymentBox.hide()
+    let fundBoxEl = document.getElementsByClassName("fund_box")[0];
+    twttr.widgets.createTweet(tweetId, fundBoxEl, {align: "center", conversation: "none", dnt: "true"})
+        .then((el) => {
+            if (el) {
+                if (!timedOut) {
+                    clearTimeout(checkTimeout)
+                    loading.css("visibility", "hidden")
+                    fundBox.css("visibility", "visible")
+                    if (foundPayment) {
+                        paymentBox.show()
+                    } else {
+                        paymentBox.hide()
+                    }
                 }
+            } else {
+                loading.css("visibility", "hidden")
+                fundBox.html("<p><b>Couldn't load fund<br>Please try again!</b>")
+                    .css("color", "#5C5C5C")
+                    .css("visibility", "visible")
             }
-        }
-    )
-
-    fundBox.html(tweet)
-    twttr.widgets.load(fundBox)
+        })
 }
 
 // GoFundMe's embed script assumes that embeds are static, and so doesn't work here
@@ -214,13 +234,13 @@ function renderFund(fund) {
     $(".payment_links").empty()
 
     if (fund.type === 'tweet') {
-        loadTweet(fund.html)
+        loadTweetById(fund.html)
     } else if (fund.type === 'gofundme') {
         loadGoFundMe(fund.html)
     } else if (fund.type === 'facebook') {
         loadFacebook(fund.html)
     } else {
-        $(".fund_box").text(`Something went wrong. Please report this fund as broken by clicking the 💔 button in the lower left corner.`)
+        $(".fund_box").text("Something went wrong, please report this fund as broken.")
     }
 
     $(".report_box").show()

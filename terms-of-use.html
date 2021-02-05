@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Terms and Conditions</title>
+
+    <link rel="icon" href="https://lets.redistribute.capital/img/favicon.ico">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #FEFEFE;
+            font-family: 'Open Sans', sans-serif;
+            letter-spacing: .1em;
+            text-align: left;
+        }
+
+        h1 {
+            color: #5C5C5C;
+            font-size: 3em;
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+        h2 {
+            color: #5C5C5C;
+            font-size: 2em;
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+        h3 {
+            color: #5C5C5C;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        a, a:visited {
+            color: #5C5C5C;
+            font-weight: 600;
+        }
+
+        .content {
+            padding: 16px;
+            width: 70%;
+            margin: 0 auto;
+        }
+
+        .sticky {
+            background-color: #FEFEFE;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .sticky + .content {
+            padding-top: 102px;
+        }
+
+        .answer {
+            margin-left: 2em;
+        }
+
+        @media (max-width: 480px) {
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            h3 {
+                font-size: 1em;
+                font-weight: bold;
+            }
+
+            .content {
+                width: 85%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="menu.css"/>
+</head>
+<body>
+<div class="sticky">
+    <a href="#main-menu"
+       id="main-menu-toggle"
+       class="menu-toggle"
+       aria-label="Open main menu">
+        <span class="sr-only">Open main menu</span>
+        <span class="fa fa-bars"
+              aria-hidden="true"><img src="img/hamburger.svg" alt="Menu" title="Menu"></span>
+    </a>
+
+    <h1>redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span></h1>
+
+    <nav id="main-menu" class="main-menu" aria-label="Main menu">
+        <a href="index.html"
+           id="main-menu-close"
+           class="menu-close"
+           aria-label="Close main menu">
+            <span class="sr-only">Close main menu</span>
+            <span class="fa fa-close" aria-hidden="true"></span>
+            redistribute<span style="color:#6dc585; font-weight: 700;">.capital</span>
+        </a>
+        <ul>
+            <li><a href="add.html">Add a Fund</a></li>
+            <li><a href="report.html">Report a Fund</a></li>
+            <li><a href="faq.html">Frequently Asked Questions</a></li>
+        </ul>
+    </nav>
+    <a href="#main-menu-toggle"
+       class="backdrop"
+       tabindex="-1"
+       aria-hidden="true" hidden></a>
+</div>
+<div class="content">
+</div>
+</body>
+</html>
