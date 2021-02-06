@@ -289,6 +289,22 @@ function updateShares(fundMd5) {
 }
 
 $(async function () {
+    const termsOfUseModal = document.getElementById("terms-of-use");
+    const agree = document.getElementsByClassName("agree-button")[0];
+
+    let termsAndConditionsAgree = window.sessionStorage.getItem("tAndC");
+
+    if (!termsAndConditionsAgree) {
+        setTimeout(() => {
+            termsOfUseModal.style.display = "block"
+        }, 1000)
+    }
+
+    agree.onclick = function () {
+        termsOfUseModal.style.display = "none";
+        window.sessionStorage.setItem("tAndC", "true")
+    }
+
     let button = $(".button");
     button.css("opacity", 0.5)
 

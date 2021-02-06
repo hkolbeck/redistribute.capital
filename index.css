@@ -99,6 +99,25 @@
     line-height: 64px;
 }
 
+.agree-box {
+    text-align: center;
+}
+
+.agree-button {
+    color: #FEFEFE;
+    background-color: #59A0F3;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    text-align: center;
+    border: 0;
+    padding: 10px;
+    border-radius: 25px;
+    display: block;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 10% auto;
+}
+
 
 @media (max-width: 480px) {
 

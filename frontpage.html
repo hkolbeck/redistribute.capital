@@ -36,6 +36,7 @@
 
     <link rel="stylesheet" href="menu.css"/>
     <link rel="stylesheet" href="shared.css"/>
+    <link rel="stylesheet" href="modal.css">
     <link rel="stylesheet" href="index.css"/>
 </head>
 <body>
@@ -89,24 +90,29 @@
 </div>
 <div class="content">
     <button tabindex="0" type="submit" class="button"> Find someone in need &#9829;</button>
-
+    <div id="terms-of-use" class="modal">
+        <div class="modal-content">
+            <div class="modal-disclaimer">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                <p>
+                    Please read the full <a href="terms-of-use.html">Terms of Use</a> before continuing.
+            </div>
+            <div class="agree-box">
+                <button class="agree-button" type="submit">I Agree to the Terms of Use</button>
+            </div>
+        </div>
+    </div>
     <div class="fund_box_wrapper">
         <div class="pitch">
             <h3>
-                <p>
                     redistribute<span class="capital">.capital</span> is not yet ready for
                     general use. Please do not follow any link, payment or otherwise, that leads off of this domain.
-                <p>
-                    Our goal is to connect small dollar donors with fundraisers for marginalized individuals and
-                    families. Find people who need the $5 you didn't spend on coffee today and make their lives better.
             </h3>
-            <div class="disclaimer">
-                <p>
-                    We cannot make guarantees about fundraiser validity or earnestness. If you find a fundraiser that
-                    appears broken or that you believe is a scam, please report it. For more information about avoiding
-                    scams please read the <a href="faq.html">F.A.Q.</a>
-                </p>
-            </div>
         </div>
         <img src="img/loading.svg" class="loading" alt="loading"/>
         <div class="fund_box"></div>
