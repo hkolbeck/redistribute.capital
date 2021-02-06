@@ -183,23 +183,25 @@ function loadGoFundMe(gofundme) {
     styleGoFundMe()
 
     let checkLoaded = null
+    let timedOut = false
 
     let checkTimeout = setTimeout(() => {
+        timedOut = true
         clearInterval(checkLoaded)
         $(".loading").css("visibility", "hidden")
-        $(".fund_box").html("<b>Couldn't load fund 😩<br>Please try again!</b>").css("visibility", "visible")
+        $(".fund_box").html("<b>Couldn't load fund<br>Please try again!</b>").css("visibility", "visible")
     }, 5000)
 
     checkLoaded = setInterval(() => {
         let rendered = $(".fund_box").find(".gfm-embed-iframe");
         if (rendered) {
             clearTimeout(checkTimeout)
-            clearInterval(checkLoaded)
-            $(".loading").css("visibility", "hidden")
-            setTimeout(() => {
-                $(".fund_box").css("visibility", "visible").attr("height", "500px")
+            if (!timedOut) {
+                clearInterval(checkLoaded)
                 $(".gfm-embed").attr("height", "450px")
-            }, 500)
+                $(".loading").css("visibility", "hidden")
+                $(".fund_box").css("visibility", "visible").attr("height", "500px")
+            }
         }
     }, 500)
 }
