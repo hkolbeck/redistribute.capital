@@ -17,12 +17,78 @@
     <style>
 
         .form_wrapper {
-            margin: 0 auto;
+            margin: 5% 0 auto;
             text-align: center;
             display: block;
         }
 
+        body {
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border: 3px solid #888;
+            width: 30%;
+            height: 40%;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
     </style>
+    <script
+            src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+            crossorigin="anonymous"></script>
+    <script>
+        $(() => {
+            const modal = document.getElementById("keep-in-mind");
+            const span = document.getElementsByClassName("close")[0];
+
+            setTimeout(() => {
+                modal.style.display = "block"
+            }, 1000)
+
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            }
+        })
+    </script>
 </head>
 <body>
 <div class="sticky">
@@ -61,7 +127,34 @@
     <div class="form_wrapper">
         <iframe
                 src="https://docs.google.com/forms/d/e/1FAIpQLSdhPzHc-NIpkTWjYtICet4flhleg5M1IO-ybyFgObEJH2t5eQ/viewform?embedded=true"
-                width="640" height="650" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                width="640" height="650" frameborder="0" marginheight="0" marginwidth="0">Loading…
+        </iframe>
+    </div>
+    <div id="keep-in-mind" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3><u>Some things to keep in mind</u></h3>
+            <ul>
+                <li>
+                    Your post is all users will see, try to explicitly say what you need, why you need it, and what your
+                    timeline is.
+                </li>
+                <li>
+                    If you're posting your username on direct payment sites, try to post it with the sitename, like:
+                    <ul>
+                        <li>cashapp: $someaccount</li>
+                        <li>venmo: @/someaccount</li>
+                    </ul>
+                    with just the account name, rather than a link.
+                </li>
+                <li>
+                    If any payment site flags your account as suspicious, we will remove your fundraiser.
+                </li>
+                <li>
+                    Sending follow-up requests for additional funds will likely result in our removing your fundraiser.
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 </body>

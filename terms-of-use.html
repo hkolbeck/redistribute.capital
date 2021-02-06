@@ -14,6 +14,75 @@
 
     <link rel="stylesheet" href="menu.css"/>
     <link rel="stylesheet" href="shared.css"/>
+    <link rel="stylesheet" href="index.css"/>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 3px solid #888;
+            width: 30%; /* Could be more or less, depending on screen size */
+            height: 40%;
+            overflow: hidden;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+    <script
+            src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+            crossorigin="anonymous"></script>
+    <script>
+        $(() => {
+            const modal = document.getElementById("myModal");
+            const btn = document.getElementById("myBtn");
+            const span = document.getElementsByClassName("close")[0];
+
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            }
+        })
+    </script>
 </head>
 <body>
 <div class="sticky">
@@ -49,6 +118,23 @@
        aria-hidden="true" hidden></a>
 </div>
 <div class="content">
+    <button tabindex="0" type="submit" class="button" id="myBtn">Open Modal</button>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3><u>Warning</u></h3>
+            <p>
+                Payments through sites like Venmo and CashApp will allow the recipient to request other payments in the
+                future. This will happen very rarely for legitimate fundraisers. If you receive multiple payment
+                requests, we advise that you block the requesting account and file a report using the form linked from
+                the menu in the upper left. If we see a pattern of follow-up requests we will remove the fundraiser from
+                the site.
+                <br><br>
+                Continue to payment site:
+                <br>
+                <img src="img/preview_twitter.png" alt="Continue to Payment Site" width="128" height="128"/>
+        </div>
+    </div>
 </div>
 </body>
 </html>
