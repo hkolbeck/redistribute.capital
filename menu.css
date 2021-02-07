@@ -92,6 +92,14 @@
     z-index: 1004;
 }
 
+.menu-link:hover {
+    background-color: #808080;
+}
+
+.menu-link:hover > a:hover {
+    color: #000000;
+}
+
 /*
  We could us `.main-menu:target:after`, but
  it wouldn't be clickable.

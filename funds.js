@@ -289,24 +289,22 @@ function updateShares(fundMd5) {
 }
 
 $(async function () {
+    let button = $(".button");
+    button.css("opacity", 0.5)
+
     const termsOfUseModal = document.getElementById("terms-of-use");
     const agree = document.getElementsByClassName("agree-button")[0];
 
     let termsAndConditionsAgree = window.sessionStorage.getItem("tAndC");
 
     if (!termsAndConditionsAgree) {
-        setTimeout(() => {
-            termsOfUseModal.style.display = "block"
-        }, 1000)
+        termsOfUseModal.style.display = "block"
     }
 
     agree.onclick = function () {
         termsOfUseModal.style.display = "none";
         window.sessionStorage.setItem("tAndC", "true")
     }
-
-    let button = $(".button");
-    button.css("opacity", 0.5)
 
     let funds = null
     let sessionFunds = window.sessionStorage.getItem("funds");
